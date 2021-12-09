@@ -5,12 +5,12 @@ import static org.mockito.Mockito.*;
 import adrianliz.smartthermostat.shared.domain.UuidGenerator;
 import adrianliz.smartthermostat.shared.domain.bus.event.DomainEvent;
 import adrianliz.smartthermostat.shared.domain.bus.event.EventBus;
-import org.junit.jupiter.api.BeforeEach;
-
 import java.util.Collections;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 
 public abstract class UnitTestCase {
+
   protected EventBus eventBus;
   protected UuidGenerator uuidGenerator;
 

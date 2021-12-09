@@ -8,4 +8,3 @@ import java.lang.annotation.*;
 public @interface DomainEventSubscriber {
   Class<? extends DomainEvent>[] value();
 }
-

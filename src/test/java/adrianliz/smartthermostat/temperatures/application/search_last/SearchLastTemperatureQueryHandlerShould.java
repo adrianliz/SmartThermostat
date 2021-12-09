@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public final class SearchLastTemperatureQueryHandlerShould extends TemperaturesModuleUnitTestCase {
+
   private SearchLastTemperatureQueryHandler handler;
 
   @BeforeEach
@@ -26,9 +27,12 @@ public final class SearchLastTemperatureQueryHandlerShould extends TemperaturesM
   void should_search_last_temperature() {
     Temperature lastTemperature = TemperatureMother.random();
     SearchLastTemperatureQuery query = SearchLastTemperatureQueryMother.random();
-    TemperatureResponse response =
-      TemperatureResponseMother.create(lastTemperature.id(), lastTemperature.sensorId(),
-        lastTemperature.celsiusRegistered(), lastTemperature.timestamp());
+    TemperatureResponse response = TemperatureResponseMother.create(
+      lastTemperature.id(),
+      lastTemperature.sensorId(),
+      lastTemperature.celsiusRegistered(),
+      lastTemperature.timestamp()
+    );
 
     shouldSearchLastTemperature(lastTemperature);
 

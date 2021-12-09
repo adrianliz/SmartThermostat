@@ -4,14 +4,14 @@ import adrianliz.smartthermostat.shared.domain.Service;
 import adrianliz.smartthermostat.shared.domain.bus.command.Command;
 import adrianliz.smartthermostat.shared.domain.bus.command.CommandHandler;
 import adrianliz.smartthermostat.shared.domain.bus.command.CommandNotRegisteredError;
-import org.reflections.Reflections;
-
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Set;
+import org.reflections.Reflections;
 
 @Service
 public final class CommandHandlersInformation {
+
   HashMap<Class<? extends Command>, Class<? extends CommandHandler>> indexedCommandHandlers;
 
   public CommandHandlersInformation() {
@@ -21,7 +21,8 @@ public final class CommandHandlersInformation {
     indexedCommandHandlers = formatHandlers(classes);
   }
 
-  public Class<? extends CommandHandler> search(Class<? extends Command> commandClass) throws CommandNotRegisteredError {
+  public Class<? extends CommandHandler> search(Class<? extends Command> commandClass)
+    throws CommandNotRegisteredError {
     Class<? extends CommandHandler> commandHandlerClass = indexedCommandHandlers.get(commandClass);
 
     if (null == commandHandlerClass) {

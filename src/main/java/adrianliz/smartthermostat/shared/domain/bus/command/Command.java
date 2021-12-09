@@ -1,4 +1,3 @@
 package adrianliz.smartthermostat.shared.domain.bus.command;
 
-public interface Command {
-}
+public interface Command {}

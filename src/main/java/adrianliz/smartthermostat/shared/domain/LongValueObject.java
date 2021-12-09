@@ -3,6 +3,7 @@ package adrianliz.smartthermostat.shared.domain;
 import java.util.Objects;
 
 public abstract class LongValueObject {
+
   private final Long value;
 
   public LongValueObject(Long value) {

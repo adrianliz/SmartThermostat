@@ -1,18 +1,17 @@
 package adrianliz.smartthermostat.temperatures.domain;
 
 import adrianliz.smartthermostat.shared.domain.bus.event.DomainEvent;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
 
 public final class TemperatureRegistered extends DomainEvent {
+
   private final double celsiusRegistered;
   private final long timestamp;
 
   public TemperatureRegistered(String aggregateId, double celsiusRegistered, long timestamp) {
     super(aggregateId);
-
     this.celsiusRegistered = celsiusRegistered;
     this.timestamp = timestamp;
   }
@@ -25,7 +24,6 @@ public final class TemperatureRegistered extends DomainEvent {
     long timestamp
   ) {
     super(aggregateId, eventId, occurredOn);
-
     this.celsiusRegistered = celsiusRegistered;
     this.timestamp = timestamp;
   }
@@ -37,10 +35,12 @@ public final class TemperatureRegistered extends DomainEvent {
 
   @Override
   public HashMap<String, Serializable> toPrimitives() {
-    return new HashMap<String, Serializable>() {{
-      put("celsiusRegistered", celsiusRegistered);
-      put("timestamp", timestamp);
-    }};
+    return new HashMap<String, Serializable>() {
+      {
+        put("celsiusRegistered", celsiusRegistered);
+        put("timestamp", timestamp);
+      }
+    };
   }
 
   @Override
@@ -48,13 +48,15 @@ public final class TemperatureRegistered extends DomainEvent {
     String aggregateId,
     HashMap<String, Serializable> body,
     String eventId,
-    String occurredOn) {
+    String occurredOn
+  ) {
     return new TemperatureRegistered(
       aggregateId,
       eventId,
       occurredOn,
       (double) body.get("celsiusRegistered"),
-      (long) body.get("timestamp"));
+      (long) body.get("timestamp")
+    );
   }
 
   public double celsisusRegistered() {

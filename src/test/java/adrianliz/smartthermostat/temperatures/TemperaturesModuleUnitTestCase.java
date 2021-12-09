@@ -5,12 +5,12 @@ import static org.mockito.Mockito.*;
 import adrianliz.smartthermostat.shared.infrastructure.UnitTestCase;
 import adrianliz.smartthermostat.temperatures.domain.Temperature;
 import adrianliz.smartthermostat.temperatures.domain.TemperaturesRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
 
-import java.util.Optional;
-
 public abstract class TemperaturesModuleUnitTestCase extends UnitTestCase {
+
   protected TemperaturesRepository repository;
 
   @BeforeEach

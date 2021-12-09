@@ -4,14 +4,14 @@ import adrianliz.smartthermostat.shared.domain.Service;
 import adrianliz.smartthermostat.shared.domain.bus.query.Query;
 import adrianliz.smartthermostat.shared.domain.bus.query.QueryHandler;
 import adrianliz.smartthermostat.shared.domain.bus.query.QueryNotRegisteredError;
-import org.reflections.Reflections;
-
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Set;
+import org.reflections.Reflections;
 
 @Service
 public final class QueryHandlersInformation {
+
   HashMap<Class<? extends Query>, Class<? extends QueryHandler>> indexedQueryHandlers;
 
   public QueryHandlersInformation() {

@@ -3,7 +3,6 @@ package adrianliz.smartthermostat.shared.domain;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.CaseFormat;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -12,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 public final class Utils {
+
   public static String dateToString(LocalDateTime dateTime) {
     return dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
   }

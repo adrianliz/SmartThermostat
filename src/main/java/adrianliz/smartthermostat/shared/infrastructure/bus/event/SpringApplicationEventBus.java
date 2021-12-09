@@ -3,12 +3,12 @@ package adrianliz.smartthermostat.shared.infrastructure.bus.event;
 import adrianliz.smartthermostat.shared.domain.Service;
 import adrianliz.smartthermostat.shared.domain.bus.event.DomainEvent;
 import adrianliz.smartthermostat.shared.domain.bus.event.EventBus;
-import org.springframework.context.ApplicationEventPublisher;
-
 import java.util.List;
+import org.springframework.context.ApplicationEventPublisher;
 
 @Service
 public class SpringApplicationEventBus implements EventBus {
+
   private final ApplicationEventPublisher publisher;
 
   public SpringApplicationEventBus(ApplicationEventPublisher publisher) {

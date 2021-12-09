@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 @Service
 public final class InMemoryQueryBus implements QueryBus {
+
   private final QueryHandlersInformation information;
   private final ApplicationContext context;
 

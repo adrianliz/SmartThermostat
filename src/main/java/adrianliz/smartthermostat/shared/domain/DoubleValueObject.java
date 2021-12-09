@@ -3,6 +3,7 @@ package adrianliz.smartthermostat.shared.domain;
 import java.util.Objects;
 
 public class DoubleValueObject {
+
   private final Double value;
 
   public DoubleValueObject(Double value) {

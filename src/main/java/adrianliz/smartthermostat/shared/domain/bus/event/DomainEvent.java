@@ -1,13 +1,13 @@
 package adrianliz.smartthermostat.shared.domain.bus.event;
 
 import adrianliz.smartthermostat.shared.domain.Utils;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.UUID;
 
 public abstract class DomainEvent {
+
   private String aggregateId;
   private String eventId;
   private String occurredOn;
@@ -24,8 +24,7 @@ public abstract class DomainEvent {
     this.occurredOn = occurredOn;
   }
 
-  protected DomainEvent() {
-  }
+  protected DomainEvent() {}
 
   public abstract String eventName();
 

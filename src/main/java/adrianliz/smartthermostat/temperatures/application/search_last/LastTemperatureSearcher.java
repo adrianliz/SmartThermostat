@@ -7,6 +7,7 @@ import adrianliz.smartthermostat.temperatures.domain.TemperaturesRepository;
 
 @Service
 public final class LastTemperatureSearcher {
+
   private final TemperaturesRepository repository;
 
   public LastTemperatureSearcher(TemperaturesRepository repository) {

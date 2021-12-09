@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 final class RegistrarTemperatureCommandHandlerShould extends TemperaturesModuleUnitTestCase {
+
   private RegistrarTemperatureCommandHandler handler;
 
   @BeforeEach

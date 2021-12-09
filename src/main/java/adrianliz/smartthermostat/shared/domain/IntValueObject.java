@@ -3,6 +3,7 @@ package adrianliz.smartthermostat.shared.domain;
 import java.util.Objects;
 
 public abstract class IntValueObject {
+
   private final Integer value;
 
   public IntValueObject(Integer value) {

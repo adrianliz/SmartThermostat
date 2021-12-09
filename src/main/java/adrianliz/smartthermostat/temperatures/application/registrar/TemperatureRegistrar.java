@@ -6,6 +6,7 @@ import adrianliz.smartthermostat.temperatures.domain.*;
 
 @Service
 public final class TemperatureRegistrar {
+
   private final TemperaturesRepository repository;
   private final EventBus eventBus;
 

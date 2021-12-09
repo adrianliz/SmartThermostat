@@ -5,7 +5,6 @@ import adrianliz.smartthermostat.temperatures.domain.Temperature;
 import adrianliz.smartthermostat.temperatures.domain.TemperatureId;
 import adrianliz.smartthermostat.temperatures.domain.TemperaturesRepository;
 import adrianliz.smartthermostat.temperatures.domain.Timestamp;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 public final class InMemoryTemperaturesRepository implements TemperaturesRepository {
+
   private final List<Temperature> temperatures = new ArrayList<>();
 
   @Override
@@ -29,8 +29,11 @@ public final class InMemoryTemperaturesRepository implements TemperaturesReposit
 
   @Override
   public List<Temperature> getBetween(Timestamp start, Timestamp end) {
-    return temperatures.stream().filter(temperature ->
-        temperature.timestamp().value() >= start.value() && temperature.timestamp().value() <= end.value())
+    return temperatures
+      .stream()
+      .filter(temperature ->
+        temperature.timestamp().value() >= start.value() && temperature.timestamp().value() <= end.value()
+      )
       .collect(Collectors.toList());
   }
 

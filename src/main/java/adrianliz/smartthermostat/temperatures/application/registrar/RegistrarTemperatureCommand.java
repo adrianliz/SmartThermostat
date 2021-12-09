@@ -3,6 +3,7 @@ package adrianliz.smartthermostat.temperatures.application.registrar;
 import adrianliz.smartthermostat.shared.domain.bus.command.Command;
 
 public final class RegistrarTemperatureCommand implements Command {
+
   private final String id;
   private final String sensorId;
   private final double celsiusRegistered;

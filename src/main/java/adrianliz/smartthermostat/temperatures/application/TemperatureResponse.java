@@ -2,10 +2,10 @@ package adrianliz.smartthermostat.temperatures.application;
 
 import adrianliz.smartthermostat.shared.domain.bus.query.Response;
 import adrianliz.smartthermostat.temperatures.domain.Temperature;
-
 import java.util.Objects;
 
 public final class TemperatureResponse implements Response {
+
   private final String id;
   private final String sensorId;
   private final Double celsiusRegistered;
@@ -23,7 +23,8 @@ public final class TemperatureResponse implements Response {
       temperature.id().value(),
       temperature.sensorId().value(),
       temperature.celsiusRegistered().value(),
-      temperature.timestamp().value());
+      temperature.timestamp().value()
+    );
   }
 
   public String id() {
@@ -47,7 +48,12 @@ public final class TemperatureResponse implements Response {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     TemperatureResponse response = (TemperatureResponse) o;
-    return timestamp == response.timestamp && Objects.equals(id, response.id) && Objects.equals(sensorId, response.sensorId) && Objects.equals(celsiusRegistered, response.celsiusRegistered);
+    return (
+      timestamp == response.timestamp &&
+      Objects.equals(id, response.id) &&
+      Objects.equals(sensorId, response.sensorId) &&
+      Objects.equals(celsiusRegistered, response.celsiusRegistered)
+    );
   }
 
   @Override

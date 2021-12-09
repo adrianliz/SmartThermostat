@@ -3,12 +3,13 @@ package adrianliz.smartthermostat.temperatures.application.registrar;
 import adrianliz.smartthermostat.temperatures.domain.*;
 
 public final class RegistrarTemperatureCommandMother {
+
   public static RegistrarTemperatureCommand create(
     TemperatureId id,
     SensorId sensorId,
     Celsius celsius,
-    Timestamp timestamp) {
-
+    Timestamp timestamp
+  ) {
     return new RegistrarTemperatureCommand(id.value(), sensorId.value(), celsius.value(), timestamp.value());
   }
 
@@ -17,6 +18,7 @@ public final class RegistrarTemperatureCommandMother {
       TemperatureIdMother.random(),
       SensorIdMother.random(),
       CelsiusMother.random(),
-      TimestampMother.random());
+      TimestampMother.random()
+    );
   }
 }

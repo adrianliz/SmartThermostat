@@ -1,4 +1,3 @@
 package adrianliz.smartthermostat.shared.domain.bus.query;
 
-public interface Query {
-}
+public interface Query {}
