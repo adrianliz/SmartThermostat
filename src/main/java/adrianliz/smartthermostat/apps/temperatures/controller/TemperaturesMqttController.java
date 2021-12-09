@@ -2,7 +2,7 @@ package adrianliz.smartthermostat.apps.temperatures.controller;
 
 import adrianliz.smartthermostat.shared.domain.Service;
 import adrianliz.smartthermostat.shared.domain.bus.command.CommandBus;
-import adrianliz.smartthermostat.temperatures.application.create.RegistrarTemperatureCommand;
+import adrianliz.smartthermostat.temperatures.application.registrar.RegistrarTemperatureCommand;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.eclipse.paho.client.mqttv3.*;
@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public final class TemperaturesMqttController implements MqttCallback {
@@ -31,6 +30,7 @@ public final class TemperaturesMqttController implements MqttCallback {
 
 		this.commandBus = commandBus;
 		this.client = createClient(mqttConfig);
+		this.client.setCallback(this);
 
 		this.options = new MqttConnectOptions();
 		options.setCleanSession(true);
@@ -55,9 +55,9 @@ public final class TemperaturesMqttController implements MqttCallback {
 		}
 	}
 
-	void subscribe(Optional<String> topic) throws MqttException {
+	void subscribe(String topic) throws MqttException {
 		this.connect();
-		client.subscribe(topic.orElse(defaultTopic));
+		client.subscribe(topic == null ? defaultTopic : topic);
 	}
 
 	@Override
