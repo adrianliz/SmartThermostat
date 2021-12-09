@@ -3,26 +3,26 @@ package adrianliz.smartthermostat.shared.domain;
 import java.util.Objects;
 
 public class DoubleValueObject {
-	private final Double value;
+  private final Double value;
 
-	public DoubleValueObject(Double value) {
-		this.value = value;
-	}
+  public DoubleValueObject(Double value) {
+    this.value = value;
+  }
 
-	public Double value() {
-		return value;
-	}
+  public Double value() {
+    return value;
+  }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		DoubleValueObject that = (DoubleValueObject) o;
-		return Objects.equals(value, that.value);
-	}
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    DoubleValueObject that = (DoubleValueObject) o;
+    return Objects.equals(value, that.value);
+  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(value);
-	}
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
 }

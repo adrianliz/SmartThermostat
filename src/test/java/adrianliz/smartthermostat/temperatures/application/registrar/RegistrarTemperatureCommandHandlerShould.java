@@ -9,24 +9,24 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 final class RegistrarTemperatureCommandHandlerShould extends TemperaturesModuleUnitTestCase {
-	private RegistrarTemperatureCommandHandler handler;
+  private RegistrarTemperatureCommandHandler handler;
 
-	@BeforeEach
-	protected void setUp() {
-		super.setUp();
+  @BeforeEach
+  protected void setUp() {
+    super.setUp();
 
-		handler = new RegistrarTemperatureCommandHandler(new TemperatureRegistrar(repository, eventBus));
-	}
+    handler = new RegistrarTemperatureCommandHandler(new TemperatureRegistrar(repository, eventBus));
+  }
 
-	@Test
-	void registrar_a_valid_temperature() {
-		RegistrarTemperatureCommand command = RegistrarTemperatureCommandMother.random();
-		Temperature temperature = TemperatureMother.fromCommand(command);
-		TemperatureRegistered domainEvent = TemperatureRegisteredMother.fromTemperature(temperature);
+  @Test
+  void registrar_a_valid_temperature() {
+    RegistrarTemperatureCommand command = RegistrarTemperatureCommandMother.random();
+    Temperature temperature = TemperatureMother.fromCommand(command);
+    TemperatureRegistered domainEvent = TemperatureRegisteredMother.fromTemperature(temperature);
 
-		handler.handle(command);
+    handler.handle(command);
 
-		shouldHaveSaved(temperature);
-		shouldHavePublished(domainEvent);
-	}
+    shouldHaveSaved(temperature);
+    shouldHavePublished(domainEvent);
+  }
 }

@@ -14,33 +14,33 @@ import java.util.HashMap;
 @RestController
 @CrossOrigin(origins = "*")
 public final class TemperaturesHttpController {
-	private final TemperaturesMqttController mqttController;
-	private final QueryBus queryBus;
+  private final TemperaturesMqttController mqttController;
+  private final QueryBus queryBus;
 
-	public TemperaturesHttpController(TemperaturesMqttController mqttController, QueryBus queryBus) {
-		this.mqttController = mqttController;
-		this.queryBus = queryBus;
-	}
+  public TemperaturesHttpController(TemperaturesMqttController mqttController, QueryBus queryBus) {
+    this.mqttController = mqttController;
+    this.queryBus = queryBus;
+  }
 
-	@PostMapping(value = "/temperatures/subscribe", produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<String> subscribe(@RequestParam(value = "topic", required = false) String topic) {
-		try {
-			this.mqttController.subscribe(topic);
-			return ResponseEntity.ok().build();
-		} catch (MqttException ex) {
-			return ResponseEntity.internalServerError().body(ex.getMessage());
-		}
-	}
+  @PostMapping(value = "/temperatures/subscribe", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<String> subscribe(@RequestParam(value = "topic", required = false) String topic) {
+    try {
+      this.mqttController.subscribe(topic);
+      return ResponseEntity.ok().build();
+    } catch (MqttException ex) {
+      return ResponseEntity.internalServerError().body(ex.getMessage());
+    }
+  }
 
-	@GetMapping(value = "/temperatures/last", produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<HashMap<String, Serializable>> getLast() {
-		TemperatureResponse temperature = queryBus.ask(new SearchLastTemperatureQuery());
+  @GetMapping(value = "/temperatures/last", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<HashMap<String, Serializable>> getLast() {
+    TemperatureResponse temperature = queryBus.ask(new SearchLastTemperatureQuery());
 
-		return ResponseEntity.ok().body(new HashMap<>() {{
-			put("id", temperature.id());
-			put("sensorId", temperature.sensorId());
-			put("celsiusRegistered", temperature.celsiusRegistered());
-			put("timestamp", temperature.timestamp());
-		}});
-	}
+    return ResponseEntity.ok().body(new HashMap<>() {{
+      put("id", temperature.id());
+      put("sensorId", temperature.sensorId());
+      put("celsiusRegistered", temperature.celsiusRegistered());
+      put("timestamp", temperature.timestamp());
+    }});
+  }
 }

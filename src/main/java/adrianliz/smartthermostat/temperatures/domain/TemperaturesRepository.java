@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TemperaturesRepository {
-	void save(Temperature temperature);
+  void save(Temperature temperature);
 
-	Optional<Temperature> searchLast();
+  Optional<Temperature> searchLast();
 
-	List<Temperature> getBetween(Timestamp start, Timestamp end);
+  List<Temperature> getBetween(Timestamp start, Timestamp end);
 
-	Optional<Temperature> search(TemperatureId id);
+  Optional<Temperature> search(TemperatureId id);
 }

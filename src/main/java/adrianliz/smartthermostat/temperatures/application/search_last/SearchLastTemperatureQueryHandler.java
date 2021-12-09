@@ -6,16 +6,16 @@ import adrianliz.smartthermostat.temperatures.application.TemperatureResponse;
 
 @Service
 public final class SearchLastTemperatureQueryHandler
-		implements QueryHandler<SearchLastTemperatureQuery, TemperatureResponse> {
+  implements QueryHandler<SearchLastTemperatureQuery, TemperatureResponse> {
 
-	private final LastTemperatureSearcher searcher;
+  private final LastTemperatureSearcher searcher;
 
-	public SearchLastTemperatureQueryHandler(LastTemperatureSearcher searcher) {
-		this.searcher = searcher;
-	}
+  public SearchLastTemperatureQueryHandler(LastTemperatureSearcher searcher) {
+    this.searcher = searcher;
+  }
 
-	@Override
-	public TemperatureResponse handle(SearchLastTemperatureQuery query) {
-		return searcher.search();
-	}
+  @Override
+  public TemperatureResponse handle(SearchLastTemperatureQuery query) {
+    return searcher.search();
+  }
 }

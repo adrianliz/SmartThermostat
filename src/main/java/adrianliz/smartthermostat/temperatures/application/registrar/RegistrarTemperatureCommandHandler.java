@@ -9,19 +9,19 @@ import adrianliz.smartthermostat.temperatures.domain.Timestamp;
 
 @Service
 public final class RegistrarTemperatureCommandHandler implements CommandHandler<RegistrarTemperatureCommand> {
-	private final TemperatureRegistrar register;
+  private final TemperatureRegistrar register;
 
-	public RegistrarTemperatureCommandHandler(TemperatureRegistrar temperatureRegistrar) {
-		this.register = temperatureRegistrar;
-	}
+  public RegistrarTemperatureCommandHandler(TemperatureRegistrar temperatureRegistrar) {
+    this.register = temperatureRegistrar;
+  }
 
-	@Override
-	public void handle(RegistrarTemperatureCommand command) {
-		TemperatureId id = new TemperatureId(command.id());
-		SensorId sensorId = new SensorId(command.sensorId());
-		Celsius celsiusRegistered = new Celsius(command.celsiusRegistered());
-		Timestamp timestamp = new Timestamp(command.timestamp());
+  @Override
+  public void handle(RegistrarTemperatureCommand command) {
+    TemperatureId id = new TemperatureId(command.id());
+    SensorId sensorId = new SensorId(command.sensorId());
+    Celsius celsiusRegistered = new Celsius(command.celsiusRegistered());
+    Timestamp timestamp = new Timestamp(command.timestamp());
 
-		register.registrar(id, sensorId, celsiusRegistered, timestamp);
-	}
+    register.registrar(id, sensorId, celsiusRegistered, timestamp);
+  }
 }

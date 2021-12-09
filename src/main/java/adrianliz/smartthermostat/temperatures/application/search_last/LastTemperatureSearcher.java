@@ -7,13 +7,13 @@ import adrianliz.smartthermostat.temperatures.domain.TemperaturesRepository;
 
 @Service
 public final class LastTemperatureSearcher {
-	private final TemperaturesRepository repository;
+  private final TemperaturesRepository repository;
 
-	public LastTemperatureSearcher(TemperaturesRepository repository) {
-		this.repository = repository;
-	}
+  public LastTemperatureSearcher(TemperaturesRepository repository) {
+    this.repository = repository;
+  }
 
-	public TemperatureResponse search() throws TemperatureNotExists {
-		return repository.searchLast().map(TemperatureResponse::fromAggregate).orElseThrow(TemperatureNotExists::new);
-	}
+  public TemperatureResponse search() throws TemperatureNotExists {
+    return repository.searchLast().map(TemperatureResponse::fromAggregate).orElseThrow(TemperatureNotExists::new);
+  }
 }
