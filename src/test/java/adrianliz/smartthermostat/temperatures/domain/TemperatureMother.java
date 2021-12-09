@@ -1,6 +1,6 @@
 package adrianliz.smartthermostat.temperatures.domain;
 
-import adrianliz.smartthermostat.temperatures.application.create.RegistrarTemperatureCommand;
+import adrianliz.smartthermostat.temperatures.application.registrar.RegistrarTemperatureCommand;
 
 public final class TemperatureMother {
 	public static Temperature create(TemperatureId id, SensorId sensorId, Celsius celsius, Timestamp timestamp) {
