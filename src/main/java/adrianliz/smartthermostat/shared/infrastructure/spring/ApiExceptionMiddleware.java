@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.util.NestedServletException;
 
 public final class ApiExceptionMiddleware implements Filter {
+
   private RequestMappingHandlerMapping mapping;
 
   public ApiExceptionMiddleware(RequestMappingHandlerMapping mapping) {
@@ -24,19 +25,13 @@ public final class ApiExceptionMiddleware implements Filter {
   }
 
   @Override
-  public void doFilter(
-    ServletRequest request,
-    ServletResponse response,
-    FilterChain chain
-  ) throws ServletException {
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException {
     HttpServletRequest httpRequest = ((HttpServletRequest) request);
     HttpServletResponse httpResponse = ((HttpServletResponse) response);
 
     try {
-      Object possibleController = (
-        (HandlerMethod) Objects.requireNonNull(
-          mapping.getHandler(httpRequest)).getHandler()
-      ).getBean();
+      Object possibleController =
+        ((HandlerMethod) Objects.requireNonNull(mapping.getHandler(httpRequest)).getHandler()).getBean();
 
       try {
         chain.doFilter(request, response);
@@ -56,13 +51,13 @@ public final class ApiExceptionMiddleware implements Filter {
     ApiController possibleController,
     NestedServletException exception
   ) throws IOException {
-    HashMap<Class<? extends DomainError>, HttpStatus> errorMapping = possibleController
-      .errorMapping();
+    HashMap<Class<? extends DomainError>, HttpStatus> errorMapping = possibleController.errorMapping();
     Throwable error = (
-      exception.getCause() instanceof CommandHandlerExecutionError ||
+        exception.getCause() instanceof CommandHandlerExecutionError ||
         exception.getCause() instanceof QueryHandlerExecutionError
-    )
-      ? exception.getCause().getCause() : exception.getCause();
+      )
+      ? exception.getCause().getCause()
+      : exception.getCause();
 
     int statusCode = statusFor(errorMapping, error);
     String errorCode = errorCodeFor(error);
@@ -72,11 +67,7 @@ public final class ApiExceptionMiddleware implements Filter {
     httpResponse.setHeader("Content-Type", "application/json");
     httpResponse.setStatus(statusCode);
     PrintWriter writer = response.getWriter();
-    writer.write(String.format(
-      "{\"error_code\": \"%s\", \"message\": \"%s\"}",
-      errorCode,
-      errorMessage
-    ));
+    writer.write(String.format("{\"error_code\": \"%s\", \"message\": \"%s\"}", errorCode, errorMessage));
     writer.close();
   }
 

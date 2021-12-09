@@ -1,6 +1,5 @@
 package adrianliz.smartthermostat.shared.infrastructure.spring;
 
-
 import adrianliz.smartthermostat.shared.domain.DomainError;
 import adrianliz.smartthermostat.shared.domain.bus.command.Command;
 import adrianliz.smartthermostat.shared.domain.bus.command.CommandBus;
@@ -12,6 +11,7 @@ import java.util.HashMap;
 import org.springframework.http.HttpStatus;
 
 public abstract class ApiController {
+
   private final QueryBus queryBus;
   private final CommandBus commandBus;
 
@@ -28,5 +28,5 @@ public abstract class ApiController {
     return queryBus.ask(query);
   }
 
-  abstract public HashMap<Class<? extends DomainError>, HttpStatus> errorMapping();
+  public abstract HashMap<Class<? extends DomainError>, HttpStatus> errorMapping();
 }
