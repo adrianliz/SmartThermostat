@@ -1,6 +1,12 @@
-# SmartThermostat
+# 🌡 SmartThermostat
 
-Repo to study CQRS and DDD
+Controla la temperatura de tu hogar de manera inteligente
 
-## Features:
-- [X] Persist temperatures from MQTT broker
+## 💡 Estado actual
+```diff
++ [En desarrollo]
+```
+
+[Ver tareas pendientes](https://trello.com/b/kkKnKL49/smartthermostat)
+
+
