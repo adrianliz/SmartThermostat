@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface TemperaturesRepository {
 	void save(Temperature temperature);
 
-	Temperature getLast();
+	Optional<Temperature> searchLast();
 
 	List<Temperature> getBetween(Timestamp start, Timestamp end);
 
