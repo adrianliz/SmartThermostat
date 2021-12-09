@@ -179,9 +179,6 @@
             <configuration>
               <hooks>
                 <pre-commit>
-                  echo "Formatting code..."
-                  exec mvn prettier:write
-                  echo "Done!"
                   echo "Running tests..."
                   exec mvn test
                   echo "Done!"
