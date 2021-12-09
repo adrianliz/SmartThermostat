@@ -1,25 +1,33 @@
-package adrianliz.smartthermostat.apps.temperatures.controller;
+package adrianliz.smartthermostat.apps.temperatures.backend.controller;
 
+import adrianliz.smartthermostat.shared.domain.DomainError;
+import adrianliz.smartthermostat.shared.domain.bus.command.CommandBus;
 import adrianliz.smartthermostat.shared.domain.bus.query.QueryBus;
+import adrianliz.smartthermostat.shared.infrastructure.spring.ApiController;
 import adrianliz.smartthermostat.temperatures.application.TemperatureResponse;
 import adrianliz.smartthermostat.temperatures.application.search_last.SearchLastTemperatureQuery;
+import adrianliz.smartthermostat.temperatures.domain.TemperatureNotExists;
 import java.io.Serializable;
 import java.util.HashMap;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
-public final class TemperaturesHttpController {
+public final class TemperaturesHttpController extends ApiController {
 
   private final TemperaturesMqttController mqttController;
-  private final QueryBus queryBus;
 
-  public TemperaturesHttpController(TemperaturesMqttController mqttController, QueryBus queryBus) {
+  public TemperaturesHttpController(
+    TemperaturesMqttController mqttController,
+    QueryBus queryBus,
+    CommandBus commandBus
+  ) {
+    super(queryBus, commandBus);
     this.mqttController = mqttController;
-    this.queryBus = queryBus;
   }
 
   @PostMapping(value = "/temperatures/subscribe", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +42,7 @@ public final class TemperaturesHttpController {
 
   @GetMapping(value = "/temperatures/last", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<HashMap<String, Serializable>> getLast() {
-    TemperatureResponse temperature = queryBus.ask(new SearchLastTemperatureQuery());
+    TemperatureResponse temperature = ask(new SearchLastTemperatureQuery());
 
     return ResponseEntity
       .ok()
@@ -48,5 +56,14 @@ public final class TemperaturesHttpController {
           }
         }
       );
+  }
+
+  @Override
+  public HashMap<Class<? extends DomainError>, HttpStatus> errorMapping() {
+    return new HashMap<>() {
+      {
+        put(TemperatureNotExists.class, HttpStatus.NOT_FOUND);
+      }
+    };
   }
 }

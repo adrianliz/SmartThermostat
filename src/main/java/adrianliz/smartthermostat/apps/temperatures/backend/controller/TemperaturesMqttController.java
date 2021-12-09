@@ -1,4 +1,4 @@
-package adrianliz.smartthermostat.apps.temperatures.controller;
+package adrianliz.smartthermostat.apps.temperatures.backend.controller;
 
 import adrianliz.smartthermostat.shared.domain.Service;
 import adrianliz.smartthermostat.shared.domain.bus.command.CommandBus;
