@@ -1,6 +1,6 @@
-package adrianliz.smartthermostat.temperatures.application;
+package adrianliz.smartthermostat.temperatures.application.registrar;
 
-import adrianliz.smartthermostat.temperatures.application.create.RegistrarTemperatureCommand;
+import adrianliz.smartthermostat.temperatures.application.registrar.RegistrarTemperatureCommand;
 import adrianliz.smartthermostat.temperatures.domain.*;
 
 public final class RegistrarTemperatureCommandMother {

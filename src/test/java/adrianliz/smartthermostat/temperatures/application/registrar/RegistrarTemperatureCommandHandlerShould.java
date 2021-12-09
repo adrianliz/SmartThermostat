@@ -1,9 +1,6 @@
-package adrianliz.smartthermostat.temperatures.application;
+package adrianliz.smartthermostat.temperatures.application.registrar;
 
 import adrianliz.smartthermostat.temperatures.TemperaturesModuleUnitTestCase;
-import adrianliz.smartthermostat.temperatures.application.create.RegistrarTemperatureCommand;
-import adrianliz.smartthermostat.temperatures.application.create.RegistrarTemperatureCommandHandler;
-import adrianliz.smartthermostat.temperatures.application.create.TemperatureRegistrar;
 import adrianliz.smartthermostat.temperatures.domain.Temperature;
 import adrianliz.smartthermostat.temperatures.domain.TemperatureMother;
 import adrianliz.smartthermostat.temperatures.domain.TemperatureRegistered;

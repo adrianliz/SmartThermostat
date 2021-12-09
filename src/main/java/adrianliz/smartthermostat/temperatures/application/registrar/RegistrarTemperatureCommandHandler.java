@@ -1,4 +1,4 @@
-package adrianliz.smartthermostat.temperatures.application.create;
+package adrianliz.smartthermostat.temperatures.application.registrar;
 
 import adrianliz.smartthermostat.shared.domain.Service;
 import adrianliz.smartthermostat.shared.domain.bus.command.CommandHandler;
@@ -22,6 +22,6 @@ public final class RegistrarTemperatureCommandHandler implements CommandHandler<
 		Celsius celsiusRegistered = new Celsius(command.celsiusRegistered());
 		Timestamp timestamp = new Timestamp(command.timestamp());
 
-		register.register(id, sensorId, celsiusRegistered, timestamp);
+		register.registrar(id, sensorId, celsiusRegistered, timestamp);
 	}
 }

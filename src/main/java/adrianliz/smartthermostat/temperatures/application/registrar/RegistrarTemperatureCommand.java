@@ -1,4 +1,4 @@
-package adrianliz.smartthermostat.temperatures.application.create;
+package adrianliz.smartthermostat.temperatures.application.registrar;
 
 import adrianliz.smartthermostat.shared.domain.bus.command.Command;
 
