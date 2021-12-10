@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="adrianliz.smartthermostat.temperatures.domain.Temperature" table="temperature">
+    <composite-id name="id" class="adrianliz.smartthermostat.temperatures.domain.TemperatureId" access="field">
+      <key-property column="id" name="value" length="36" type="string" access="field"/>
+    </composite-id>
+
+    <component name="sensorId" class="adrianliz.smartthermostat.temperatures.domain.SensorId" access="field">
+      <property column="sensor_id" name="value" length="36" type="string" access="field"/>
+    </component>
+
+    <component name="celsiusRegistered" class="adrianliz.smartthermostat.temperatures.domain.Celsius" access="field">
+      <property column="celsius_registered" name="value" type="double" access="field"/>
+    </component>
+
+    <component name="timestamp" class="adrianliz.smartthermostat.temperatures.domain.Timestamp" access="field">
+      <property column="timestamp" name="value" type="long" access="field"/>
+    </component>
+  </class>
+</hibernate-mapping>

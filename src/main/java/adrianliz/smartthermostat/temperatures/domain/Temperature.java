@@ -10,40 +10,26 @@ public final class Temperature extends AggregateRoot {
   private final Celsius celsiusRegistered;
   private final Timestamp timestamp;
 
-  public Temperature(
-    TemperatureId id,
-    SensorId sensorId,
-    Celsius celsiusRegistered,
-    Timestamp timestamp
-  ) {
+  public Temperature(TemperatureId id, SensorId sensorId, Celsius celsiusRegistered, Timestamp timestamp) {
     this.id = id;
     this.sensorId = sensorId;
     this.celsiusRegistered = celsiusRegistered;
     this.timestamp = timestamp;
   }
 
-  public static Temperature create(
-    TemperatureId temperatureId,
-    SensorId sensorId,
-    Celsius celsiusRegistered,
-    Timestamp timestamp
-  ) {
-    Temperature temperature = new Temperature(
-      temperatureId,
-      sensorId,
-      celsiusRegistered,
-      timestamp
-    );
+  public static Temperature create(TemperatureId temperatureId, SensorId sensorId, Celsius celsiusRegistered, Timestamp timestamp) {
+    Temperature temperature = new Temperature(temperatureId, sensorId, celsiusRegistered, timestamp);
 
-    temperature.record(
-      new TemperatureRegistered(
-        temperatureId.value(),
-        celsiusRegistered.value(),
-        timestamp.value()
-      )
-    );
+    temperature.record(new TemperatureRegistered(temperatureId.value(), celsiusRegistered.value(), timestamp.value()));
 
     return temperature;
+  }
+
+  private Temperature() {
+    id = null;
+    sensorId = null;
+    celsiusRegistered = null;
+    timestamp = null;
   }
 
   public TemperatureId id() {

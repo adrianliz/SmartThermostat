@@ -7,4 +7,8 @@ public final class Timestamp extends LongValueObject {
   public Timestamp(Long value) {
     super(value);
   }
+
+  private Timestamp() {
+    super(null);
+  }
 }

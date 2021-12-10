@@ -7,4 +7,6 @@ public final class TemperatureId extends Identifier {
   public TemperatureId(String value) {
     super(value);
   }
+
+  private TemperatureId() {}
 }

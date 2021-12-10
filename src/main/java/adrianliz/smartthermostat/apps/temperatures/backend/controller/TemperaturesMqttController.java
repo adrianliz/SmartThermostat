@@ -25,10 +25,7 @@ public final class TemperaturesMqttController implements MqttCallback {
   private final MqttConnectOptions options;
   private String defaultTopic;
 
-  public TemperaturesMqttController(
-    CommandBus commandBus,
-    @Value("${mqtt_config}") Resource mqttConfig
-  ) throws IOException, MqttException {
+  public TemperaturesMqttController(CommandBus commandBus, @Value("${mqtt_config}") Resource mqttConfig) throws IOException, MqttException {
     this.commandBus = commandBus;
     this.client = createClient(mqttConfig);
     this.client.setCallback(this);
@@ -38,14 +35,10 @@ public final class TemperaturesMqttController implements MqttCallback {
     options.setAutomaticReconnect(true);
   }
 
-  private IMqttClient createClient(Resource mqttConfig)
-    throws IOException, MqttException {
+  private IMqttClient createClient(Resource mqttConfig) throws IOException, MqttException {
     Gson gson = new Gson();
     Map<String, String> json = gson.fromJson(
-      new InputStreamReader(
-        mqttConfig.getInputStream(),
-        StandardCharsets.UTF_8
-      ),
+      new InputStreamReader(mqttConfig.getInputStream(), StandardCharsets.UTF_8),
       new TypeToken<Map<String, String>>() {}.getType()
     );
 
@@ -67,16 +60,12 @@ public final class TemperaturesMqttController implements MqttCallback {
   @Override
   public void connectionLost(Throwable throwable) {
     System.err.println("Connection to MQTT broker was lost");
-    System.err.println(throwable.getMessage());
+    System.err.println("Cause -->" + throwable.getCause().getMessage());
   }
 
   @Override
   public void messageArrived(String s, MqttMessage message) {
-    RegistrarTemperatureCommand command = new Gson()
-      .fromJson(
-        new String(message.getPayload()),
-        RegistrarTemperatureCommand.class
-      );
+    RegistrarTemperatureCommand command = new Gson().fromJson(new String(message.getPayload()), RegistrarTemperatureCommand.class);
 
     commandBus.dispatch(command);
   }

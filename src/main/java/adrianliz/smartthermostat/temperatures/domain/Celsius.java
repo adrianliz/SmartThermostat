@@ -12,6 +12,10 @@ public final class Celsius extends DoubleValueObject {
     validateCelsius(value);
   }
 
+  private Celsius() {
+    super(null);
+  }
+
   private void validateCelsius(Double value) throws InvalidCelsius {
     if (value == null || value > MAX_CELSIUS || value < MIN_CELSIUS) {
       throw new InvalidCelsius(value, MAX_CELSIUS, MIN_CELSIUS);

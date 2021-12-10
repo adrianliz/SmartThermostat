@@ -7,4 +7,6 @@ public final class SensorId extends Identifier {
   public SensorId(String value) {
     super(value);
   }
+
+  private SensorId() {}
 }

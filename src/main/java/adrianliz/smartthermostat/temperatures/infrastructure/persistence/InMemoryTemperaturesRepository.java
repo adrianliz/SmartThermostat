@@ -1,6 +1,5 @@
-package adrianliz.smartthermostat.temperatures.infrastructure;
+package adrianliz.smartthermostat.temperatures.infrastructure.persistence;
 
-import adrianliz.smartthermostat.shared.domain.Service;
 import adrianliz.smartthermostat.temperatures.domain.Temperature;
 import adrianliz.smartthermostat.temperatures.domain.TemperatureId;
 import adrianliz.smartthermostat.temperatures.domain.TemperaturesRepository;
@@ -10,9 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
-public final class InMemoryTemperaturesRepository
-  implements TemperaturesRepository {
+public final class InMemoryTemperaturesRepository implements TemperaturesRepository {
 
   private final List<Temperature> temperatures = new ArrayList<>();
 
@@ -32,10 +29,7 @@ public final class InMemoryTemperaturesRepository
   public List<Temperature> getBetween(Timestamp start, Timestamp end) {
     return temperatures
       .stream()
-      .filter(temperature ->
-        temperature.timestamp().value() >= start.value() &&
-        temperature.timestamp().value() <= end.value()
-      )
+      .filter(temperature -> temperature.timestamp().value() >= start.value() && temperature.timestamp().value() <= end.value())
       .collect(Collectors.toList());
   }
 
