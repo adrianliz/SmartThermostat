@@ -10,7 +10,11 @@ public final class TemperatureRegistered extends DomainEvent {
   private final double celsiusRegistered;
   private final long timestamp;
 
-  public TemperatureRegistered(String aggregateId, double celsiusRegistered, long timestamp) {
+  public TemperatureRegistered(
+    String aggregateId,
+    double celsiusRegistered,
+    long timestamp
+  ) {
     super(aggregateId);
     this.celsiusRegistered = celsiusRegistered;
     this.timestamp = timestamp;
@@ -72,7 +76,10 @@ public final class TemperatureRegistered extends DomainEvent {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     TemperatureRegistered that = (TemperatureRegistered) o;
-    return Double.compare(that.celsiusRegistered, celsiusRegistered) == 0 && timestamp == that.timestamp;
+    return (
+      Double.compare(that.celsiusRegistered, celsiusRegistered) == 0 &&
+      timestamp == that.timestamp
+    );
   }
 
   @Override

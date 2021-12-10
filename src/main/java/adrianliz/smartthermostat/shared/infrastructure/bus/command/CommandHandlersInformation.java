@@ -16,14 +16,19 @@ public final class CommandHandlersInformation {
 
   public CommandHandlersInformation() {
     Reflections reflections = new Reflections("adrianliz.smartthermostat");
-    Set<Class<? extends CommandHandler>> classes = reflections.getSubTypesOf(CommandHandler.class);
+    Set<Class<? extends CommandHandler>> classes = reflections.getSubTypesOf(
+      CommandHandler.class
+    );
 
     indexedCommandHandlers = formatHandlers(classes);
   }
 
-  public Class<? extends CommandHandler> search(Class<? extends Command> commandClass)
-    throws CommandNotRegisteredError {
-    Class<? extends CommandHandler> commandHandlerClass = indexedCommandHandlers.get(commandClass);
+  public Class<? extends CommandHandler> search(
+    Class<? extends Command> commandClass
+  ) throws CommandNotRegisteredError {
+    Class<? extends CommandHandler> commandHandlerClass = indexedCommandHandlers.get(
+      commandClass
+    );
 
     if (null == commandHandlerClass) {
       throw new CommandNotRegisteredError(commandClass);

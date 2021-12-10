@@ -11,7 +11,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public final class InMemoryTemperaturesRepository implements TemperaturesRepository {
+public final class InMemoryTemperaturesRepository
+  implements TemperaturesRepository {
 
   private final List<Temperature> temperatures = new ArrayList<>();
 
@@ -32,7 +33,8 @@ public final class InMemoryTemperaturesRepository implements TemperaturesReposit
     return temperatures
       .stream()
       .filter(temperature ->
-        temperature.timestamp().value() >= start.value() && temperature.timestamp().value() <= end.value()
+        temperature.timestamp().value() >= start.value() &&
+        temperature.timestamp().value() <= end.value()
       )
       .collect(Collectors.toList());
   }

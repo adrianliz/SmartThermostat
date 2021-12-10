@@ -10,7 +10,10 @@ public final class InMemoryQueryBus implements QueryBus {
   private final QueryHandlersInformation information;
   private final ApplicationContext context;
 
-  public InMemoryQueryBus(QueryHandlersInformation information, ApplicationContext context) {
+  public InMemoryQueryBus(
+    QueryHandlersInformation information,
+    ApplicationContext context
+  ) {
     this.information = information;
     this.context = context;
   }
@@ -18,7 +21,9 @@ public final class InMemoryQueryBus implements QueryBus {
   @Override
   public Response ask(Query query) throws QueryHandlerExecutionError {
     try {
-      Class<? extends QueryHandler> queryHandlerClass = information.search(query.getClass());
+      Class<? extends QueryHandler> queryHandlerClass = information.search(
+        query.getClass()
+      );
 
       QueryHandler handler = context.getBean(queryHandlerClass);
 

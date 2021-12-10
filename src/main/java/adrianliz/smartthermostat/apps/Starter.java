@@ -8,14 +8,12 @@ import org.springframework.context.annotation.FilterType;
 
 @SpringBootApplication
 @ComponentScan(
-  includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Service.class),
-  value = {
-    "adrianliz.smartthermostat.apps", "adrianliz.smartthermostat.shared", "adrianliz.smartthermostat.temperatures",
-  }
+    includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Service.class),
+    value = { "adrianliz.smartthermostat.apps", "adrianliz.smartthermostat.shared", "adrianliz.smartthermostat.temperatures" }
 )
 public class Starter {
 
-  public static void main(String[] args) {
-    SpringApplication.run(Starter.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(Starter.class, args);
+    }
 }

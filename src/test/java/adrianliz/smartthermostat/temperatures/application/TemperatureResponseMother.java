@@ -10,7 +10,12 @@ public final class TemperatureResponseMother {
     Celsius celsiusRegistered,
     Timestamp timestamp
   ) {
-    return new TemperatureResponse(id.value(), sensorId.value(), celsiusRegistered.value(), timestamp.value());
+    return new TemperatureResponse(
+      id.value(),
+      sensorId.value(),
+      celsiusRegistered.value(),
+      timestamp.value()
+    );
   }
 
   public static TemperatureResponse random() {

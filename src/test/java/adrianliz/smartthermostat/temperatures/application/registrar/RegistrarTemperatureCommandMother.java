@@ -10,7 +10,12 @@ public final class RegistrarTemperatureCommandMother {
     Celsius celsius,
     Timestamp timestamp
   ) {
-    return new RegistrarTemperatureCommand(id.value(), sensorId.value(), celsius.value(), timestamp.value());
+    return new RegistrarTemperatureCommand(
+      id.value(),
+      sensorId.value(),
+      celsius.value(),
+      timestamp.value()
+    );
   }
 
   public static RegistrarTemperatureCommand random() {
@@ -22,7 +27,9 @@ public final class RegistrarTemperatureCommandMother {
     );
   }
 
-  public static RegistrarTemperatureCommand withCelsiusLowerThan(Double celsius) {
+  public static RegistrarTemperatureCommand withCelsiusLowerThan(
+    Double celsius
+  ) {
     return new RegistrarTemperatureCommand(
       TemperatureIdMother.random().value(),
       SensorIdMother.random().value(),
@@ -31,7 +38,9 @@ public final class RegistrarTemperatureCommandMother {
     );
   }
 
-  public static RegistrarTemperatureCommand withCelsiusHigherThan(Double celsius) {
+  public static RegistrarTemperatureCommand withCelsiusHigherThan(
+    Double celsius
+  ) {
     return new RegistrarTemperatureCommand(
       TemperatureIdMother.random().value(),
       SensorIdMother.random().value(),

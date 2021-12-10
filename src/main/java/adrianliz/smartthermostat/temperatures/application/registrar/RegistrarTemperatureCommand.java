@@ -9,7 +9,12 @@ public final class RegistrarTemperatureCommand implements Command {
   private final double celsiusRegistered;
   private final long timestamp;
 
-  public RegistrarTemperatureCommand(String id, String sensorId, double celsiusRegistered, long timestamp) {
+  public RegistrarTemperatureCommand(
+    String id,
+    String sensorId,
+    double celsiusRegistered,
+    long timestamp
+  ) {
     this.id = id;
     this.sensorId = sensorId;
     this.celsiusRegistered = celsiusRegistered;

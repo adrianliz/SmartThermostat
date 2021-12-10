@@ -11,7 +11,9 @@ public class TemperaturesBackendConfiguration {
 
   private final RequestMappingHandlerMapping mapping;
 
-  public TemperaturesBackendConfiguration(RequestMappingHandlerMapping mapping) {
+  public TemperaturesBackendConfiguration(
+    RequestMappingHandlerMapping mapping
+  ) {
     this.mapping = mapping;
   }
 

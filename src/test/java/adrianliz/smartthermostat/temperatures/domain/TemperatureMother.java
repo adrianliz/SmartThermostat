@@ -4,7 +4,12 @@ import adrianliz.smartthermostat.temperatures.application.registrar.RegistrarTem
 
 public final class TemperatureMother {
 
-  public static Temperature create(TemperatureId id, SensorId sensorId, Celsius celsius, Timestamp timestamp) {
+  public static Temperature create(
+    TemperatureId id,
+    SensorId sensorId,
+    Celsius celsius,
+    Timestamp timestamp
+  ) {
     return new Temperature(id, sensorId, celsius, timestamp);
   }
 

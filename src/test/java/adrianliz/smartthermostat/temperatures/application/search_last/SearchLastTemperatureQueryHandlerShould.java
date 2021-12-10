@@ -12,7 +12,8 @@ import adrianliz.smartthermostat.temperatures.domain.TemperatureNotExists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public final class SearchLastTemperatureQueryHandlerShould extends TemperaturesModuleUnitTestCase {
+public final class SearchLastTemperatureQueryHandlerShould
+  extends TemperaturesModuleUnitTestCase {
 
   private SearchLastTemperatureQueryHandler handler;
 
@@ -20,7 +21,10 @@ public final class SearchLastTemperatureQueryHandlerShould extends TemperaturesM
   protected void setUp() {
     super.setUp();
 
-    handler = new SearchLastTemperatureQueryHandler(new LastTemperatureSearcher(repository));
+    handler =
+      new SearchLastTemperatureQueryHandler(
+        new LastTemperatureSearcher(repository)
+      );
   }
 
   @Test

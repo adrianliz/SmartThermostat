@@ -16,13 +16,19 @@ public final class QueryHandlersInformation {
 
   public QueryHandlersInformation() {
     Reflections reflections = new Reflections("adrianliz.smartthermostat");
-    Set<Class<? extends QueryHandler>> classes = reflections.getSubTypesOf(QueryHandler.class);
+    Set<Class<? extends QueryHandler>> classes = reflections.getSubTypesOf(
+      QueryHandler.class
+    );
 
     indexedQueryHandlers = formatHandlers(classes);
   }
 
-  public Class<? extends QueryHandler> search(Class<? extends Query> queryClass) throws QueryNotRegisteredError {
-    Class<? extends QueryHandler> queryHandlerClass = indexedQueryHandlers.get(queryClass);
+  public Class<? extends QueryHandler> search(
+    Class<? extends Query> queryClass
+  ) throws QueryNotRegisteredError {
+    Class<? extends QueryHandler> queryHandlerClass = indexedQueryHandlers.get(
+      queryClass
+    );
 
     if (null == queryHandlerClass) {
       throw new QueryNotRegisteredError(queryClass);

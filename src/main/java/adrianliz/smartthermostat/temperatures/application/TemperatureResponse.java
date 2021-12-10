@@ -11,7 +11,12 @@ public final class TemperatureResponse implements Response {
   private final Double celsiusRegistered;
   private final long timestamp;
 
-  public TemperatureResponse(String id, String sensorId, Double celsiusRegistered, long timestamp) {
+  public TemperatureResponse(
+    String id,
+    String sensorId,
+    Double celsiusRegistered,
+    long timestamp
+  ) {
     this.id = id;
     this.sensorId = sensorId;
     this.celsiusRegistered = celsiusRegistered;
