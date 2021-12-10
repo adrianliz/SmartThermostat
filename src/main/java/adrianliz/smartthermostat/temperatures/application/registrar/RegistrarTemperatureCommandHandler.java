@@ -2,7 +2,10 @@ package adrianliz.smartthermostat.temperatures.application.registrar;
 
 import adrianliz.smartthermostat.shared.domain.Service;
 import adrianliz.smartthermostat.shared.domain.bus.command.CommandHandler;
-import adrianliz.smartthermostat.temperatures.domain.*;
+import adrianliz.smartthermostat.temperatures.domain.Celsius;
+import adrianliz.smartthermostat.temperatures.domain.SensorId;
+import adrianliz.smartthermostat.temperatures.domain.TemperatureId;
+import adrianliz.smartthermostat.temperatures.domain.Timestamp;
 
 @Service
 public final class RegistrarTemperatureCommandHandler implements CommandHandler<RegistrarTemperatureCommand> {
@@ -14,7 +17,7 @@ public final class RegistrarTemperatureCommandHandler implements CommandHandler<
   }
 
   @Override
-  public void handle(RegistrarTemperatureCommand command) throws InvalidCelsius {
+  public void handle(RegistrarTemperatureCommand command) {
     TemperatureId id = new TemperatureId(command.id());
     SensorId sensorId = new SensorId(command.sensorId());
     Celsius celsiusRegistered = new Celsius(command.celsiusRegistered());

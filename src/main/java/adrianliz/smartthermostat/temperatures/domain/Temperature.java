@@ -4,6 +4,7 @@ import adrianliz.smartthermostat.shared.domain.AggregateRoot;
 import java.util.Objects;
 
 public final class Temperature extends AggregateRoot {
+
   private final TemperatureId id;
   private final SensorId sensorId;
   private final Celsius celsiusRegistered;
