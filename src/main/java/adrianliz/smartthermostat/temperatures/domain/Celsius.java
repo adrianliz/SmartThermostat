@@ -7,7 +7,7 @@ public final class Celsius extends DoubleValueObject {
   private static final Double MAX_CELSIUS = 50.0;
   private static final Double MIN_CELSIUS = -20.0;
 
-  public Celsius(Double value) {
+  public Celsius(Double value) throws InvalidCelsius {
     super(value);
     validateCelsius(value);
   }
