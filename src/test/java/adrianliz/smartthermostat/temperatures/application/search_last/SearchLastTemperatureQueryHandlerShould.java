@@ -24,7 +24,7 @@ public final class SearchLastTemperatureQueryHandlerShould extends TemperaturesM
   }
 
   @Test
-  void should_search_last_temperature() {
+  void search_last_temperature() {
     Temperature lastTemperature = TemperatureMother.random();
     SearchLastTemperatureQuery query = SearchLastTemperatureQueryMother.random();
     TemperatureResponse response = TemperatureResponseMother.create(
@@ -40,7 +40,7 @@ public final class SearchLastTemperatureQueryHandlerShould extends TemperaturesM
   }
 
   @Test
-  void should_throw_temperature_not_exists_when_there_arent_temperatures() {
+  void throw_temperature_not_exists_when_there_arent_temperatures() {
     SearchLastTemperatureQuery query = SearchLastTemperatureQueryMother.random();
 
     assertThrows(TemperatureNotExists.class, () -> handler.handle(query));

@@ -21,4 +21,22 @@ public final class RegistrarTemperatureCommandMother {
       TimestampMother.random()
     );
   }
+
+  public static RegistrarTemperatureCommand withCelsiusLowerThan(Double celsius) {
+    return new RegistrarTemperatureCommand(
+      TemperatureIdMother.random().value(),
+      SensorIdMother.random().value(),
+      celsius - 1,
+      TimestampMother.random().value()
+    );
+  }
+
+  public static RegistrarTemperatureCommand withCelsiusHigherThan(Double celsius) {
+    return new RegistrarTemperatureCommand(
+      TemperatureIdMother.random().value(),
+      SensorIdMother.random().value(),
+      celsius + 1,
+      TimestampMother.random().value()
+    );
+  }
 }
