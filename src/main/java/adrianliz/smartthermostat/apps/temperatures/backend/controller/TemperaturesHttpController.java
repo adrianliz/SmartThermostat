@@ -21,22 +21,13 @@ public final class TemperaturesHttpController extends ApiController {
 
   private final TemperaturesMqttController mqttController;
 
-  public TemperaturesHttpController(
-    TemperaturesMqttController mqttController,
-    QueryBus queryBus,
-    CommandBus commandBus
-  ) {
+  public TemperaturesHttpController(TemperaturesMqttController mqttController, QueryBus queryBus, CommandBus commandBus) {
     super(queryBus, commandBus);
     this.mqttController = mqttController;
   }
 
-  @PostMapping(
-    value = "/temperatures/subscribe",
-    produces = MediaType.APPLICATION_JSON_VALUE
-  )
-  ResponseEntity<String> subscribe(
-    @RequestParam(value = "topic", required = false) String topic
-  ) {
+  @PostMapping(value = "/temperatures/enable-registrar", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<String> subscribe(@RequestParam(value = "topic", required = false) String topic) {
     try {
       this.mqttController.subscribe(topic);
       return ResponseEntity.ok().build();
@@ -45,11 +36,8 @@ public final class TemperaturesHttpController extends ApiController {
     }
   }
 
-  @GetMapping(
-    value = "/temperatures/last",
-    produces = MediaType.APPLICATION_JSON_VALUE
-  )
-  ResponseEntity<HashMap<String, Serializable>> getLast() {
+  @GetMapping(value = "/temperatures/last", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<HashMap<String, Serializable>> getLastTemperature() {
     TemperatureResponse temperature = ask(new SearchLastTemperatureQuery());
 
     return ResponseEntity

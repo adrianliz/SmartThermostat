@@ -7,12 +7,12 @@ import adrianliz.smartthermostat.shared.domain.bus.query.QueryHandlerExecutionEr
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.Objects;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.util.NestedServletException;
 
@@ -25,32 +25,23 @@ public final class ApiExceptionMiddleware implements Filter {
   }
 
   @Override
-  public void doFilter(
-    ServletRequest request,
-    ServletResponse response,
-    FilterChain chain
-  ) throws ServletException {
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException {
     HttpServletRequest httpRequest = ((HttpServletRequest) request);
     HttpServletResponse httpResponse = ((HttpServletResponse) response);
 
     try {
-      Object possibleController =
-        (
-          (HandlerMethod) Objects
-            .requireNonNull(mapping.getHandler(httpRequest))
-            .getHandler()
-        ).getBean();
-
-      try {
+      HandlerExecutionChain handlerChain = mapping.getHandler(httpRequest);
+      if (handlerChain == null) {
         chain.doFilter(request, response);
-      } catch (NestedServletException exception) {
-        if (possibleController instanceof ApiController) {
-          handleCustomError(
-            response,
-            httpResponse,
-            (ApiController) possibleController,
-            exception
-          );
+      } else {
+        Object possibleController = ((HandlerMethod) handlerChain.getHandler()).getBean();
+
+        try {
+          chain.doFilter(request, response);
+        } catch (NestedServletException exception) {
+          if (possibleController instanceof ApiController) {
+            handleCustomError(response, httpResponse, (ApiController) possibleController, exception);
+          }
         }
       }
     } catch (Exception e) {
@@ -66,9 +57,8 @@ public final class ApiExceptionMiddleware implements Filter {
   ) throws IOException {
     HashMap<Class<? extends DomainError>, HttpStatus> errorMapping = possibleController.errorMapping();
     Throwable error = (
-        exception.getCause() instanceof CommandHandlerExecutionError ||
-        exception.getCause() instanceof QueryHandlerExecutionError
-      )
+      exception.getCause() instanceof CommandHandlerExecutionError || exception.getCause() instanceof QueryHandlerExecutionError
+    )
       ? exception.getCause().getCause()
       : exception.getCause();
 
@@ -76,17 +66,13 @@ public final class ApiExceptionMiddleware implements Filter {
     String errorCode = errorCodeFor(error);
     String errorMessage = error.getMessage();
 
+    exception.printStackTrace();
+
     httpResponse.reset();
     httpResponse.setHeader("Content-Type", "application/json");
     httpResponse.setStatus(statusCode);
     PrintWriter writer = response.getWriter();
-    writer.write(
-      String.format(
-        "{\"error_code\": \"%s\", \"message\": \"%s\"}",
-        errorCode,
-        errorMessage
-      )
-    );
+    writer.write(String.format("{\"error_code\": \"%s\", \"message\": \"%s\"}", errorCode, errorMessage));
     writer.close();
   }
 
@@ -98,12 +84,7 @@ public final class ApiExceptionMiddleware implements Filter {
     return Utils.toSnake(error.getClass().toString());
   }
 
-  private int statusFor(
-    HashMap<Class<? extends DomainError>, HttpStatus> errorMapping,
-    Throwable error
-  ) {
-    return errorMapping
-      .getOrDefault(error.getClass(), HttpStatus.INTERNAL_SERVER_ERROR)
-      .value();
+  private int statusFor(HashMap<Class<? extends DomainError>, HttpStatus> errorMapping, Throwable error) {
+    return errorMapping.getOrDefault(error.getClass(), HttpStatus.INTERNAL_SERVER_ERROR).value();
   }
 }

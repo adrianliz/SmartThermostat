@@ -1,14 +1,14 @@
 package adrianliz.smartthermostat.shared.infrastructure.hibernate;
 
 import adrianliz.smartthermostat.shared.domain.Service;
-import java.io.File;
 import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Properties;
+import java.util.Scanner;
 import javax.sql.DataSource;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.hibernate.cfg.AvailableSettings;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -31,14 +31,14 @@ public final class HibernateConfigurationFactory {
     return transactionManager;
   }
 
-  public LocalSessionFactoryBean sessionFactory(String contextName, DataSource dataSource) {
+  public LocalSessionFactoryBean sessionFactory(String contextName, DataSource dataSource) throws IOException {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
     sessionFactory.setDataSource(dataSource);
     sessionFactory.setHibernateProperties(hibernateProperties());
 
-    List<Resource> mappingFiles = searchMappingFiles(contextName);
+    Resource[] mappingFiles = resourceResolver.getResources("classpath:database/mapping/*.hbm.xml");
 
-    sessionFactory.setMappingLocations(mappingFiles.toArray(new Resource[mappingFiles.size()]));
+    sessionFactory.setMappingLocations(mappingFiles);
 
     return sessionFactory;
   }
@@ -48,7 +48,8 @@ public final class HibernateConfigurationFactory {
     dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
     dataSource.setUrl(
       String.format(
-        "jdbc:mysql://%s:%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false" + "&serverTimezone=UTC",
+        "jdbc:mysql://%s:%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false" +
+          "&serverTimezone=UTC",
         host,
         port,
         databaseName
@@ -63,50 +64,6 @@ public final class HibernateConfigurationFactory {
     dataSource.setConnectionInitSqls(new ArrayList<>(Arrays.asList(mysqlSentences.split(";"))));
 
     return dataSource;
-  }
-
-  private List<Resource> searchMappingFiles(String contextName) {
-    List<String> modules = subdirectoriesFor(contextName);
-    List<String> goodPaths = new ArrayList<>();
-
-    for (String module : modules) {
-      String[] files = mappingFilesIn(module + "/persistence/hibernate/");
-
-      for (String file : files) {
-        goodPaths.add(module + "/persistence/hibernate/" + file);
-      }
-    }
-
-    return goodPaths.stream().map(FileSystemResource::new).collect(Collectors.toList());
-  }
-
-  private List<String> subdirectoriesFor(String contextName) {
-    String path = "./src/main/java/adrianliz/smartthermostat/" + contextName + "/";
-
-    String[] files = new File(path).list((current, name) -> new File(current, name).isDirectory());
-
-    if (null == files) {
-      path = "./main/java/adrianliz/smartthermostat/" + contextName + "/";
-      files = new File(path).list((current, name) -> new File(current, name).isDirectory());
-    }
-
-    if (null == files) {
-      return Collections.emptyList();
-    }
-
-    String finalPath = path;
-
-    return Arrays.stream(files).map(file -> finalPath + file).collect(Collectors.toList());
-  }
-
-  private String[] mappingFilesIn(String path) {
-    String[] files = new File(path).list((current, name) -> new File(current, name).getName().contains(".hbm.xml"));
-
-    if (null == files) {
-      return new String[0];
-    }
-
-    return files;
   }
 
   private Properties hibernateProperties() {
