@@ -1,5 +1,0 @@
-{
-  "BROKER_URI": "tcp://adrifijo.ddns.net:1883",
-  "CLIENT_ID": "smartthermostat",
-  "TOPIC": "/smartthermostat/temperatures/"
-}

@@ -1,4 +1,0 @@
-mqtt_config: ${env.MQTT_CONFIG}
-temperatures_database_port: 3306
-temperatures_database_user: root
-temperatures_database_password: example
