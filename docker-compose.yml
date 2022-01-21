@@ -8,13 +8,14 @@ services:
     environment:
       TEMPERATURES_SERVER_PORT: ${TEMPERATURES_SERVER_PORT}
     ports:
-      - "${TEMPERATURES_SERVER_PORT}:8080"
+      - "${TEMPERATURES_SERVER_PORT}:${TEMPERATURES_SERVER_PORT}"
     depends_on:
       - db
     links:
       - db
     networks:
       - db
+      - default
 
   db:
     image: mysql
@@ -28,12 +29,16 @@ services:
       - db:/var/lib/mysql
     networks:
       - db
+      - default
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 10000:8080
+    networks:
+      - db
+      - default
 
 volumes:
   db:
