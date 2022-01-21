@@ -65,10 +65,8 @@ public final class TemperaturesWebSocketController {
     template.convertAndSendToUser(event.getUser().getName(), "/temperatures/last", getLastTemperature());
   }
 
-  @MessageMapping("/temperatures/last")
-  @SendTo("/temperatures/last")
-  public HashMap<String, Serializable> sendLastTemperature() {
-    return getLastTemperature();
+  public void sendLastTemperature() {
+    template.convertAndSend("/temperatures/last", getLastTemperature());
   }
 }
 

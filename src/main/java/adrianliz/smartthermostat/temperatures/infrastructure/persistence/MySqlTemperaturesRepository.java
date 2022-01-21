@@ -31,7 +31,7 @@ public class MySqlTemperaturesRepository extends HibernateRepository<Temperature
   @Override
   public Optional<Temperature> searchLast() {
     Criteria criteria = new Criteria(Filters.none(), Order.desc("timestamp"), Optional.of(1), Optional.empty());
-    return Optional.ofNullable(byCriteria(criteria).get(0));
+    return byCriteria(criteria).stream().findFirst();
   }
 
   @Override

@@ -66,8 +66,6 @@ public final class ApiExceptionMiddleware implements Filter {
     String errorCode = errorCodeFor(error);
     String errorMessage = error.getMessage();
 
-    exception.printStackTrace();
-
     httpResponse.reset();
     httpResponse.setHeader("Content-Type", "application/json");
     httpResponse.setStatus(statusCode);
