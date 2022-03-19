@@ -11,7 +11,7 @@ public abstract class HibernateRepository<T> {
 
   protected final SessionFactory sessionFactory;
   protected final Class<T> aggregateClass;
-  protected final HibernateCriteriaConverter criteriaConverter;
+  protected final HibernateCriteriaConverter<T> criteriaConverter;
 
   public HibernateRepository(SessionFactory sessionFactory, Class<T> aggregateClass) {
     this.sessionFactory = sessionFactory;
@@ -37,7 +37,6 @@ public abstract class HibernateRepository<T> {
 
   protected List<T> all() {
     CriteriaQuery<T> criteria = sessionFactory.getCriteriaBuilder().createQuery(aggregateClass);
-
     criteria.from(aggregateClass);
 
     return sessionFactory.getCurrentSession().createQuery(criteria).getResultList();

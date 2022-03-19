@@ -6,11 +6,10 @@ import adrianliz.smartthermostat.shared.domain.bus.query.QueryBus;
 import adrianliz.smartthermostat.shared.domain.bus.query.QueryHandlerExecutionError;
 import adrianliz.smartthermostat.temperatures.application.TemperatureResponse;
 import adrianliz.smartthermostat.temperatures.application.search_last.SearchLastTemperatureQuery;
+import adrianliz.smartthermostat.temperatures.domain.TemperatureRegistered;
 import java.io.Serializable;
 import java.util.HashMap;
 import org.springframework.context.event.EventListener;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
@@ -61,12 +60,13 @@ public final class TemperaturesWebSocketController {
   }
 
   @EventListener
-  private void handleSubscribeEvent(SessionSubscribeEvent event) {
-    template.convertAndSendToUser(event.getUser().getName(), "/temperatures/last", getLastTemperature());
+  public void handleSubscribeEvent(SessionSubscribeEvent event) {
+    template.convertAndSendToUser(
+        event.getUser().getName(), "/temperatures/last", getLastTemperature());
   }
 
-  public void sendLastTemperature() {
-    template.convertAndSend("/temperatures/last", getLastTemperature());
+  @EventListener(TemperatureRegistered.class)
+  public void sendTemperature(TemperatureRegistered temperatureRegistered) {
+    template.convertAndSend("/temperatures/last", temperatureRegistered);
   }
 }
-

@@ -16,19 +16,14 @@ public final class CommandHandlersInformation {
 
   public CommandHandlersInformation() {
     Reflections reflections = new Reflections("adrianliz.smartthermostat");
-    Set<Class<? extends CommandHandler>> classes = reflections.getSubTypesOf(
-      CommandHandler.class
-    );
+    Set<Class<? extends CommandHandler>> classes = reflections.getSubTypesOf(CommandHandler.class);
 
     indexedCommandHandlers = formatHandlers(classes);
   }
 
-  public Class<? extends CommandHandler> search(
-    Class<? extends Command> commandClass
-  ) throws CommandNotRegisteredError {
-    Class<? extends CommandHandler> commandHandlerClass = indexedCommandHandlers.get(
-      commandClass
-    );
+  public Class<? extends CommandHandler> search(Class<? extends Command> commandClass)
+      throws CommandNotRegisteredError {
+    Class<? extends CommandHandler> commandHandlerClass = indexedCommandHandlers.get(commandClass);
 
     if (null == commandHandlerClass) {
       throw new CommandNotRegisteredError(commandClass);
@@ -38,13 +33,13 @@ public final class CommandHandlersInformation {
   }
 
   private HashMap<Class<? extends Command>, Class<? extends CommandHandler>> formatHandlers(
-    Set<Class<? extends CommandHandler>> commandHandlers
-  ) {
+      Set<Class<? extends CommandHandler>> commandHandlers) {
     HashMap<Class<? extends Command>, Class<? extends CommandHandler>> handlers = new HashMap<>();
 
     for (Class<? extends CommandHandler> handler : commandHandlers) {
       ParameterizedType paramType = (ParameterizedType) handler.getGenericInterfaces()[0];
-      Class<? extends Command> commandClass = (Class<? extends Command>) paramType.getActualTypeArguments()[0];
+      Class<? extends Command> commandClass =
+          (Class<? extends Command>) paramType.getActualTypeArguments()[0];
 
       handlers.put(commandClass, handler);
     }

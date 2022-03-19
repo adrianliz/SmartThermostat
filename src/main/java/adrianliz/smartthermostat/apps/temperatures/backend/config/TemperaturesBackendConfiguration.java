@@ -11,15 +11,14 @@ public class TemperaturesBackendConfiguration {
 
   private final RequestMappingHandlerMapping mapping;
 
-  public TemperaturesBackendConfiguration(
-    RequestMappingHandlerMapping mapping
-  ) {
+  public TemperaturesBackendConfiguration(RequestMappingHandlerMapping mapping) {
     this.mapping = mapping;
   }
 
   @Bean
   public FilterRegistrationBean<ApiExceptionMiddleware> basicHttpAuthMiddleware() {
-    FilterRegistrationBean<ApiExceptionMiddleware> registrationBean = new FilterRegistrationBean<>();
+    FilterRegistrationBean<ApiExceptionMiddleware> registrationBean =
+        new FilterRegistrationBean<>();
 
     registrationBean.setFilter(new ApiExceptionMiddleware(mapping));
 

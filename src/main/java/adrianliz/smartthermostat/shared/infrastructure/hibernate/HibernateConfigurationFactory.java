@@ -2,6 +2,7 @@ package adrianliz.smartthermostat.shared.infrastructure.hibernate;
 
 import adrianliz.smartthermostat.shared.domain.Service;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
@@ -24,42 +25,45 @@ public final class HibernateConfigurationFactory {
     this.resourceResolver = resourceResolver;
   }
 
-  public PlatformTransactionManager hibernateTransactionManager(LocalSessionFactoryBean sessionFactory) {
+  public PlatformTransactionManager hibernateTransactionManager(
+      LocalSessionFactoryBean sessionFactory) {
     HibernateTransactionManager transactionManager = new HibernateTransactionManager();
     transactionManager.setSessionFactory(sessionFactory.getObject());
 
     return transactionManager;
   }
 
-  public LocalSessionFactoryBean sessionFactory(String contextName, DataSource dataSource) throws IOException {
+  public LocalSessionFactoryBean sessionFactory(String contextName, DataSource dataSource)
+      throws IOException {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
     sessionFactory.setDataSource(dataSource);
     sessionFactory.setHibernateProperties(hibernateProperties());
 
     Resource[] mappingFiles = resourceResolver.getResources("classpath:database/mapping/*.hbm.xml");
-
     sessionFactory.setMappingLocations(mappingFiles);
 
     return sessionFactory;
   }
 
-  public DataSource dataSource(String host, Integer port, String databaseName, String username, String password) throws IOException {
+  public DataSource dataSource(
+      String host, Integer port, String databaseName, String username, String password)
+      throws IOException {
     BasicDataSource dataSource = new BasicDataSource();
     dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
     dataSource.setUrl(
-      String.format(
-        "jdbc:mysql://%s:%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false" +
-          "&serverTimezone=UTC",
-        host,
-        port,
-        databaseName
-      )
-    );
+        String.format(
+            "jdbc:mysql://%s:%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&"
+                + "useLegacyDatetimeCode=false&serverTimezone=UTC",
+            host, port, databaseName));
     dataSource.setUsername(username);
     dataSource.setPassword(password);
 
-    Resource mysqlResource = resourceResolver.getResource(String.format("classpath:database/%s.sql", databaseName));
-    String mysqlSentences = new Scanner(mysqlResource.getInputStream(), "UTF-8").useDelimiter("\\A").next();
+    Resource mysqlResource =
+        resourceResolver.getResource(String.format("classpath:database/%s.sql", databaseName));
+    String mysqlSentences =
+        new Scanner(mysqlResource.getInputStream(), StandardCharsets.UTF_8)
+            .useDelimiter("\\A")
+            .next();
 
     dataSource.setConnectionInitSqls(new ArrayList<>(Arrays.asList(mysqlSentences.split(";"))));
 

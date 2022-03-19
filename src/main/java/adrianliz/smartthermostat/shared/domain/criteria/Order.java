@@ -13,7 +13,9 @@ public final class Order {
   }
 
   public static Order fromValues(Optional<String> orderBy, Optional<String> orderType) {
-    return orderBy.map(order -> new Order(new OrderBy(order), OrderType.valueOf(orderType.orElse("ASC")))).orElseGet(Order::none);
+    return orderBy
+        .map(order -> new Order(new OrderBy(order), OrderType.valueOf(orderType.orElse("ASC"))))
+        .orElseGet(Order::none);
   }
 
   public static Order none() {

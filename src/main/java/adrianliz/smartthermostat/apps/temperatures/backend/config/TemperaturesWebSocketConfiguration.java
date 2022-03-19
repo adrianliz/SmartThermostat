@@ -21,10 +21,11 @@ public class TemperaturesWebSocketConfiguration implements WebSocketMessageBroke
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
     try {
-      registry.addEndpoint(config.get("TEMPERATURES_STOMP_ENDPOINT"))
-        .setHandshakeHandler(new AssignPrincipalHandshakeHandler())
-        .setAllowedOriginPatterns("*")
-        .withSockJS();
+      registry
+          .addEndpoint(config.get("TEMPERATURES_STOMP_ENDPOINT"))
+          .setHandshakeHandler(new AssignPrincipalHandshakeHandler())
+          .setAllowedOriginPatterns("*")
+          .withSockJS();
     } catch (ParameterNotExist ex) {
       ex.printStackTrace();
     }

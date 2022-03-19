@@ -11,12 +11,7 @@ public final class TemperatureResponse implements Response {
   private final Double celsiusRegistered;
   private final long timestamp;
 
-  public TemperatureResponse(
-    String id,
-    String sensorId,
-    Double celsiusRegistered,
-    long timestamp
-  ) {
+  public TemperatureResponse(String id, String sensorId, Double celsiusRegistered, long timestamp) {
     this.id = id;
     this.sensorId = sensorId;
     this.celsiusRegistered = celsiusRegistered;
@@ -25,11 +20,10 @@ public final class TemperatureResponse implements Response {
 
   public static TemperatureResponse fromAggregate(Temperature temperature) {
     return new TemperatureResponse(
-      temperature.id().value(),
-      temperature.sensorId().value(),
-      temperature.celsiusRegistered().value(),
-      temperature.timestamp().value()
-    );
+        temperature.id().value(),
+        temperature.sensorId().value(),
+        temperature.celsiusRegistered().value(),
+        temperature.timestamp().value());
   }
 
   public String id() {
@@ -53,12 +47,10 @@ public final class TemperatureResponse implements Response {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     TemperatureResponse response = (TemperatureResponse) o;
-    return (
-      timestamp == response.timestamp &&
-      Objects.equals(id, response.id) &&
-      Objects.equals(sensorId, response.sensorId) &&
-      Objects.equals(celsiusRegistered, response.celsiusRegistered)
-    );
+    return (timestamp == response.timestamp
+        && Objects.equals(id, response.id)
+        && Objects.equals(sensorId, response.sensorId)
+        && Objects.equals(celsiusRegistered, response.celsiusRegistered));
   }
 
   @Override

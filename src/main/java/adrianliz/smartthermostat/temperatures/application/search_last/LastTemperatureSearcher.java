@@ -16,8 +16,8 @@ public final class LastTemperatureSearcher {
 
   public TemperatureResponse search() throws TemperatureNotExists {
     return repository
-      .searchLast()
-      .map(TemperatureResponse::fromAggregate)
-      .orElseThrow(TemperatureNotExists::new);
+        .searchLast()
+        .map(TemperatureResponse::fromAggregate)
+        .orElseThrow(TemperatureNotExists::new);
   }
 }

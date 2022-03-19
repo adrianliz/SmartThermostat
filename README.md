@@ -1,22 +1,30 @@
 # 🌡 SmartThermostat
 
-Controla la temperatura de tu hogar de manera inteligente
+Manage your home temperature efficiently
 
-## 💡 Estado actual
-```diff
-+ [En desarrollo]
-```
+## 💡 Info about this project
+This is a side project developed for learning and practicing:
+- Hexagonal architecture
+- DDD tactical patterns
+- TDD methodology
 
-[Ver tareas pendientes](https://trello.com/b/kkKnKL49/smartthermostat)
+[Kanban board](https://trello.com/b/kkKnKL49/smartthermostat)
 
+## 🚀 How to deploy it
+- Create new ``.env`` file in the resource folder with these variables:
+  - TEMPERATURES_SERVER_PORT
+  - TEMPERATURES_MQTT_BROKER_URI
+  - TEMPERATURES_MQTT_CLIENT_ID
+  - TEMPERATURES_MQTT_TOPIC
+  - TEMPERATURES_STOMP_ENDPOINT
+  - TEMPERATURES_STOMP_TOPIC
+  - TEMPERATURES_STOMP_APP_PREFIX
+  - TEMPERATURES_STOMP_USER_PREFIX
+  - TEMPERATURES_DATABASE_HOST
+  - TEMPERATURES_DATABASE_PORT
+  - TEMPERATURES_DATABASE_NAME
+  - TEMPERATURES_DATABASE_USER
+  - TEMPERATURES_DATABASE_PASSWORD
 
-## ✏ Herramientas de desarrollo
-- Se utiliza Prettier como formateador -> [Prettier for Java](https://github.com/jhipster/prettier-java)
-- Se necesita instalar el plugin ``FileWatchers`` en IntelliJ con la siguiente configuración:
-![file_watcher_plugin](readme_images/file_watcher_config.png)
-
-
-## 🚀 Despliegue
-- Se necesita crear un .env en la carpeta resources
-- Ejecutar ``docker-compose --env-file src/main/resources/.env build``
-- Ejecutar ``docker-compose --env-file src/main/resources/.env up``
+- Execute: ``docker-compose --env-file src/main/resources/.env build``
+- Execute: ``docker-compose --env-file src/main/resources/.env up``

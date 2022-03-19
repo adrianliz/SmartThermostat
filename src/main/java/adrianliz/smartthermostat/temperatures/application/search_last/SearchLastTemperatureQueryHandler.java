@@ -6,7 +6,7 @@ import adrianliz.smartthermostat.temperatures.application.TemperatureResponse;
 
 @Service
 public final class SearchLastTemperatureQueryHandler
-  implements QueryHandler<SearchLastTemperatureQuery, TemperatureResponse> {
+    implements QueryHandler<SearchLastTemperatureQuery, TemperatureResponse> {
 
   private final LastTemperatureSearcher searcher;
 

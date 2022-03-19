@@ -27,10 +27,12 @@ public final class InMemoryTemperaturesRepository implements TemperaturesReposit
 
   @Override
   public List<Temperature> getBetween(Timestamp start, Timestamp end) {
-    return temperatures
-      .stream()
-      .filter(temperature -> temperature.timestamp().value() >= start.value() && temperature.timestamp().value() <= end.value())
-      .collect(Collectors.toList());
+    return temperatures.stream()
+        .filter(
+            temperature ->
+                temperature.timestamp().value() >= start.value()
+                    && temperature.timestamp().value() <= end.value())
+        .collect(Collectors.toList());
   }
 
   @Override

@@ -7,21 +7,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 public final class HibernateCriteriaConverter<T> {
 
   private final CriteriaBuilder builder;
-  private final HashMap<FilterOperator, BiFunction<Filter, Root<T>, Predicate>> predicateTransformers = new HashMap<>() {
-    {
-      put(FilterOperator.EQUAL, HibernateCriteriaConverter.this::equalsPredicateTransformer);
-      put(FilterOperator.NOT_EQUAL, HibernateCriteriaConverter.this::notEqualsPredicateTransformer);
-      put(FilterOperator.GT, HibernateCriteriaConverter.this::greaterThanPredicateTransformer);
-      put(FilterOperator.LT, HibernateCriteriaConverter.this::lowerThanPredicateTransformer);
-      put(FilterOperator.CONTAINS, HibernateCriteriaConverter.this::containsPredicateTransformer);
-      put(FilterOperator.NOT_CONTAINS, HibernateCriteriaConverter.this::notContainsPredicateTransformer);
-    }
-  };
+  private final HashMap<FilterOperator, BiFunction<Filter, Root<T>, Predicate>>
+      predicateTransformers =
+          new HashMap<>() {
+            {
+              put(
+                  FilterOperator.EQUAL,
+                  HibernateCriteriaConverter.this::equalsPredicateTransformer);
+              put(
+                  FilterOperator.NOT_EQUAL,
+                  HibernateCriteriaConverter.this::notEqualsPredicateTransformer);
+              put(
+                  FilterOperator.GT,
+                  HibernateCriteriaConverter.this::greaterThanPredicateTransformer);
+              put(
+                  FilterOperator.LT,
+                  HibernateCriteriaConverter.this::lowerThanPredicateTransformer);
+              put(
+                  FilterOperator.CONTAINS,
+                  HibernateCriteriaConverter.this::containsPredicateTransformer);
+              put(
+                  FilterOperator.NOT_CONTAINS,
+                  HibernateCriteriaConverter.this::notContainsPredicateTransformer);
+            }
+          };
 
   public HibernateCriteriaConverter(CriteriaBuilder builder) {
     this.builder = builder;
@@ -35,7 +54,8 @@ public final class HibernateCriteriaConverter<T> {
 
     if (criteria.order().hasOrder()) {
       Path<Object> orderBy = root.get(criteria.order().orderBy().value());
-      Order order = criteria.order().orderType().isAsc() ? builder.asc(orderBy) : builder.desc(orderBy);
+      Order order =
+          criteria.order().orderType().isAsc() ? builder.asc(orderBy) : builder.desc(orderBy);
 
       hibernateCriteria.orderBy(order);
     }
@@ -44,7 +64,8 @@ public final class HibernateCriteriaConverter<T> {
   }
 
   private Predicate[] formatPredicates(List<Filter> filters, Root<T> root) {
-    List<Predicate> predicates = filters.stream().map(filter -> formatPredicate(filter, root)).collect(Collectors.toList());
+    List<Predicate> predicates =
+        filters.stream().map(filter -> formatPredicate(filter, root)).collect(Collectors.toList());
 
     Predicate[] predicatesArray = new Predicate[predicates.size()];
     predicatesArray = predicates.toArray(predicatesArray);
@@ -53,7 +74,8 @@ public final class HibernateCriteriaConverter<T> {
   }
 
   private Predicate formatPredicate(Filter filter, Root<T> root) {
-    BiFunction<Filter, Root<T>, Predicate> transformer = predicateTransformers.get(filter.operator());
+    BiFunction<Filter, Root<T>, Predicate> transformer =
+        predicateTransformers.get(filter.operator());
 
     return transformer.apply(filter, root);
   }
@@ -75,10 +97,12 @@ public final class HibernateCriteriaConverter<T> {
   }
 
   private Predicate containsPredicateTransformer(Filter filter, Root<T> root) {
-    return builder.like(root.get(filter.field().value()), String.format("%%%s%%", filter.value().value()));
+    return builder.like(
+        root.get(filter.field().value()), String.format("%%%s%%", filter.value().value()));
   }
 
   private Predicate notContainsPredicateTransformer(Filter filter, Root<T> root) {
-    return builder.notLike(root.get(filter.field().value()), String.format("%%%s%%", filter.value().value()));
+    return builder.notLike(
+        root.get(filter.field().value()), String.format("%%%s%%", filter.value().value()));
   }
 }

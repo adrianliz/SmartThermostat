@@ -10,23 +10,18 @@ public final class TemperatureRegistered extends DomainEvent {
   private final double celsiusRegistered;
   private final long timestamp;
 
-  public TemperatureRegistered(
-    String aggregateId,
-    double celsiusRegistered,
-    long timestamp
-  ) {
+  public TemperatureRegistered(String aggregateId, double celsiusRegistered, long timestamp) {
     super(aggregateId);
     this.celsiusRegistered = celsiusRegistered;
     this.timestamp = timestamp;
   }
 
   public TemperatureRegistered(
-    String aggregateId,
-    String eventId,
-    String occurredOn,
-    double celsiusRegistered,
-    long timestamp
-  ) {
+      String aggregateId,
+      String eventId,
+      String occurredOn,
+      double celsiusRegistered,
+      long timestamp) {
     super(aggregateId, eventId, occurredOn);
     this.celsiusRegistered = celsiusRegistered;
     this.timestamp = timestamp;
@@ -49,18 +44,13 @@ public final class TemperatureRegistered extends DomainEvent {
 
   @Override
   public DomainEvent fromPrimitives(
-    String aggregateId,
-    HashMap<String, Serializable> body,
-    String eventId,
-    String occurredOn
-  ) {
+      String aggregateId, HashMap<String, Serializable> body, String eventId, String occurredOn) {
     return new TemperatureRegistered(
-      aggregateId,
-      eventId,
-      occurredOn,
-      (double) body.get("celsiusRegistered"),
-      (long) body.get("timestamp")
-    );
+        aggregateId,
+        eventId,
+        occurredOn,
+        (double) body.get("celsiusRegistered"),
+        (long) body.get("timestamp"));
   }
 
   public double celsisusRegistered() {
@@ -76,10 +66,8 @@ public final class TemperatureRegistered extends DomainEvent {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     TemperatureRegistered that = (TemperatureRegistered) o;
-    return (
-      Double.compare(that.celsiusRegistered, celsiusRegistered) == 0 &&
-      timestamp == that.timestamp
-    );
+    return (Double.compare(that.celsiusRegistered, celsiusRegistered) == 0
+        && timestamp == that.timestamp);
   }
 
   @Override

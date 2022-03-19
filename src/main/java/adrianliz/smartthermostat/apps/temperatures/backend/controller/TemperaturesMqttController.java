@@ -7,7 +7,13 @@ import adrianliz.smartthermostat.shared.infrastructure.config.ParameterNotExist;
 import adrianliz.smartthermostat.temperatures.application.registrar.RegistrarTemperatureCommand;
 import com.google.gson.Gson;
 import java.io.IOException;
-import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.IMqttClient;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 @Service
 public final class TemperaturesMqttController implements MqttCallback {
@@ -15,15 +21,12 @@ public final class TemperaturesMqttController implements MqttCallback {
   private final CommandBus commandBus;
   private final IMqttClient client;
   private final MqttConnectOptions options;
-  private final TemperaturesWebSocketController temperaturesWebSocketController;
   private final Gson jsonClient;
   private String defaultTopic;
 
-  public TemperaturesMqttController(CommandBus commandBus,
-                                    TemperaturesWebSocketController temperaturesWebSocketController,
-                                    Parameter config) throws ParameterNotExist, MqttException {
+  public TemperaturesMqttController(CommandBus commandBus, Parameter config)
+      throws ParameterNotExist, MqttException {
     this.commandBus = commandBus;
-    this.temperaturesWebSocketController = temperaturesWebSocketController;
 
     this.client = createClient(config);
     this.client.setCallback(this);
@@ -37,7 +40,8 @@ public final class TemperaturesMqttController implements MqttCallback {
 
   private IMqttClient createClient(Parameter config) throws ParameterNotExist, MqttException {
     this.defaultTopic = config.get("TEMPERATURES_MQTT_TOPIC");
-    return new MqttClient(config.get("TEMPERATURES_MQTT_BROKER_URI"), config.get("TEMPERATURES_MQTT_CLIENT_ID"));
+    return new MqttClient(
+        config.get("TEMPERATURES_MQTT_BROKER_URI"), config.get("TEMPERATURES_MQTT_CLIENT_ID"));
   }
 
   private void connect() throws MqttException {
@@ -60,14 +64,11 @@ public final class TemperaturesMqttController implements MqttCallback {
   @Override
   public void messageArrived(String s, MqttMessage message) throws IOException {
     RegistrarTemperatureCommand command =
-      jsonClient.fromJson(new String(message.getPayload()), RegistrarTemperatureCommand.class);
+        jsonClient.fromJson(new String(message.getPayload()), RegistrarTemperatureCommand.class);
 
     commandBus.dispatch(command);
-    //TODO do with event publisher
-    temperaturesWebSocketController.sendLastTemperature();
   }
 
   @Override
-  public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
-  }
+  public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
 }

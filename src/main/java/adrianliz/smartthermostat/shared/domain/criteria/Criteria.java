@@ -44,6 +44,8 @@ public final class Criteria {
   }
 
   public String serialize() {
-    return String.format("%s~~%s~~%s~~%s", filters.serialize(), order.serialize(), offset.orElse(0), limit.orElse(0));
+    return String.format(
+        "%s~~%s~~%s~~%s",
+        filters.serialize(), order.serialize(), offset.orElse(0), limit.orElse(0));
   }
 }

@@ -2,7 +2,12 @@ package adrianliz.smartthermostat.temperatures.application.registrar;
 
 import adrianliz.smartthermostat.shared.domain.Service;
 import adrianliz.smartthermostat.shared.domain.bus.event.EventBus;
-import adrianliz.smartthermostat.temperatures.domain.*;
+import adrianliz.smartthermostat.temperatures.domain.Celsius;
+import adrianliz.smartthermostat.temperatures.domain.SensorId;
+import adrianliz.smartthermostat.temperatures.domain.Temperature;
+import adrianliz.smartthermostat.temperatures.domain.TemperatureId;
+import adrianliz.smartthermostat.temperatures.domain.TemperaturesRepository;
+import adrianliz.smartthermostat.temperatures.domain.Timestamp;
 
 @Service
 public final class TemperatureRegistrar {
@@ -10,26 +15,14 @@ public final class TemperatureRegistrar {
   private final TemperaturesRepository repository;
   private final EventBus eventBus;
 
-  public TemperatureRegistrar(
-    TemperaturesRepository repository,
-    EventBus eventBus
-  ) {
+  public TemperatureRegistrar(TemperaturesRepository repository, EventBus eventBus) {
     this.repository = repository;
     this.eventBus = eventBus;
   }
 
   public void registrar(
-    TemperatureId id,
-    SensorId sensorId,
-    Celsius celsiusRegistered,
-    Timestamp timestamp
-  ) {
-    Temperature temperature = Temperature.create(
-      id,
-      sensorId,
-      celsiusRegistered,
-      timestamp
-    );
+      TemperatureId id, SensorId sensorId, Celsius celsiusRegistered, Timestamp timestamp) {
+    Temperature temperature = Temperature.create(id, sensorId, celsiusRegistered, timestamp);
 
     repository.save(temperature);
     eventBus.publish(temperature.pullDomainEvents());

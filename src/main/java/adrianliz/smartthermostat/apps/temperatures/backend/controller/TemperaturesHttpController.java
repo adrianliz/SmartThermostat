@@ -13,7 +13,11 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -21,12 +25,15 @@ public final class TemperaturesHttpController extends ApiController {
 
   private final TemperaturesMqttController mqttController;
 
-  public TemperaturesHttpController(TemperaturesMqttController mqttController, QueryBus queryBus, CommandBus commandBus) {
+  public TemperaturesHttpController(
+      TemperaturesMqttController mqttController, QueryBus queryBus, CommandBus commandBus) {
     super(queryBus, commandBus);
     this.mqttController = mqttController;
   }
 
-  @PostMapping(value = "/temperatures/enable-registrar", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(
+      value = "/temperatures/enable-registrar",
+      produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<String> subscribe(@RequestParam(value = "topic", required = false) String topic) {
     try {
       this.mqttController.subscribe(topic);
@@ -40,18 +47,16 @@ public final class TemperaturesHttpController extends ApiController {
   ResponseEntity<HashMap<String, Serializable>> getLastTemperature() {
     TemperatureResponse temperature = ask(new SearchLastTemperatureQuery());
 
-    return ResponseEntity
-      .ok()
-      .body(
-        new HashMap<>() {
-          {
-            put("id", temperature.id());
-            put("sensorId", temperature.sensorId());
-            put("celsiusRegistered", temperature.celsiusRegistered());
-            put("timestamp", temperature.timestamp());
-          }
-        }
-      );
+    return ResponseEntity.ok()
+        .body(
+            new HashMap<>() {
+              {
+                put("id", temperature.id());
+                put("sensorId", temperature.sensorId());
+                put("celsiusRegistered", temperature.celsiusRegistered());
+                put("timestamp", temperature.timestamp());
+              }
+            });
   }
 
   @Override

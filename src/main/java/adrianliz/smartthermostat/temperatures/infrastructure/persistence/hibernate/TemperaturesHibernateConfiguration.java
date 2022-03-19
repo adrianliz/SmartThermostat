@@ -15,17 +15,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class TemperaturesHibernateConfiguration {
 
+  private static final String CONTEXT_NAME = "temperatures";
   private final HibernateConfigurationFactory factory;
   private final Parameter config;
-  private final String CONTEXT_NAME = "temperatures";
 
-  public TemperaturesHibernateConfiguration(HibernateConfigurationFactory factory, Parameter config) {
+  public TemperaturesHibernateConfiguration(
+      HibernateConfigurationFactory factory, Parameter config) {
     this.factory = factory;
     this.config = config;
   }
 
   @Bean("temperatures-transaction_manager")
-  public PlatformTransactionManager hibernateTransactionManager() throws IOException, ParameterNotExist {
+  public PlatformTransactionManager hibernateTransactionManager()
+      throws IOException, ParameterNotExist {
     return factory.hibernateTransactionManager(sessionFactory());
   }
 
@@ -37,11 +39,10 @@ public class TemperaturesHibernateConfiguration {
   @Bean("temperatures-data_source")
   public DataSource dataSource() throws IOException, ParameterNotExist {
     return factory.dataSource(
-      config.get("TEMPERATURES_DATABASE_HOST"),
-      config.getInt("TEMPERATURES_DATABASE_PORT"),
-      config.get("TEMPERATURES_DATABASE_NAME"),
-      config.get("TEMPERATURES_DATABASE_USER"),
-      config.get("TEMPERATURES_DATABASE_PASSWORD")
-    );
+        config.get("TEMPERATURES_DATABASE_HOST"),
+        config.getInt("TEMPERATURES_DATABASE_PORT"),
+        config.get("TEMPERATURES_DATABASE_NAME"),
+        config.get("TEMPERATURES_DATABASE_USER"),
+        config.get("TEMPERATURES_DATABASE_PASSWORD"));
   }
 }

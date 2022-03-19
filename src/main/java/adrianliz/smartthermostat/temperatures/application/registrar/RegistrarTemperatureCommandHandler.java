@@ -9,13 +9,11 @@ import adrianliz.smartthermostat.temperatures.domain.Timestamp;
 
 @Service
 public final class RegistrarTemperatureCommandHandler
-  implements CommandHandler<RegistrarTemperatureCommand> {
+    implements CommandHandler<RegistrarTemperatureCommand> {
 
   private final TemperatureRegistrar register;
 
-  public RegistrarTemperatureCommandHandler(
-    TemperatureRegistrar temperatureRegistrar
-  ) {
+  public RegistrarTemperatureCommandHandler(TemperatureRegistrar temperatureRegistrar) {
     this.register = temperatureRegistrar;
   }
 

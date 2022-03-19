@@ -11,8 +11,8 @@ public final class AssignPrincipalHandshakeHandler extends DefaultHandshakeHandl
   private static final String ATTR_PRINCIPAL = "__principal__";
 
   @Override
-  protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler,
-                                    Map<String, Object> attributes) {
+  protected Principal determineUser(
+      ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
     final String name;
     if (!attributes.containsKey(ATTR_PRINCIPAL)) {
       name = generateRandomUsername();

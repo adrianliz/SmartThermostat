@@ -17,9 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional("temperatures-transaction_manager")
-public class MySqlTemperaturesRepository extends HibernateRepository<Temperature> implements TemperaturesRepository {
+public class MySqlTemperaturesRepository extends HibernateRepository<Temperature>
+    implements TemperaturesRepository {
 
-  public MySqlTemperaturesRepository(@Qualifier("temperatures-session_factory") SessionFactory sessionFactory) {
+  public MySqlTemperaturesRepository(
+      @Qualifier("temperatures-session_factory") SessionFactory sessionFactory) {
     super(sessionFactory, Temperature.class);
   }
 
@@ -30,7 +32,8 @@ public class MySqlTemperaturesRepository extends HibernateRepository<Temperature
 
   @Override
   public Optional<Temperature> searchLast() {
-    Criteria criteria = new Criteria(Filters.none(), Order.desc("timestamp"), Optional.of(1), Optional.empty());
+    Criteria criteria =
+        new Criteria(Filters.none(), Order.desc("timestamp"), Optional.of(1), Optional.empty());
     return byCriteria(criteria).stream().findFirst();
   }
 
