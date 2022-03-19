@@ -1,5 +1,3 @@
-CREATE DATABASE IF NOT EXISTS temperatures;
-
 CREATE TABLE IF NOT EXISTS temperature (
     id CHAR(36) NOT NULL,
     sensor_id CHAR(36) NOT NULL,

@@ -26,5 +26,7 @@ This is a side project developed for learning and practicing:
   - TEMPERATURES_DATABASE_USER
   - TEMPERATURES_DATABASE_PASSWORD
 
-- Execute: ``docker-compose --env-file src/main/resources/.env build``
-- Execute: ``docker-compose --env-file src/main/resources/.env up``
+- Execute: ``docker-compose --file docker-compose-dev.yml --env-file src/main/resources/.env.dev up``
+for local development
+
+- Execute: ``docker-compose --env-file src/main/resources/.env up`` for production setup

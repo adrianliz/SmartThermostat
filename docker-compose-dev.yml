@@ -1,28 +1,12 @@
 version: '3.1'
 
 services:
-  smartthermostat-backend:
-    build: .
-    image: smartthermostat-backend
-    container_name: smartthermostat-backend
-    environment:
-      TEMPERATURES_SERVER_PORT: ${TEMPERATURES_SERVER_PORT}
-    ports:
-      - "${TEMPERATURES_SERVER_PORT}:${TEMPERATURES_SERVER_PORT}"
-    depends_on:
-      - db
-    links:
-      - db
-    networks:
-      - db
-      - default
-
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: "${TEMPERATURES_DATABASE_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${TEMPERATURES_DATABASE_NAME}"
     ports:
       - "3306:3306"
     volumes:
