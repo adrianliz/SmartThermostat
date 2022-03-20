@@ -17,11 +17,11 @@ public class EnvironmentConfig {
 
   @Bean
   public Dotenv dotenv() {
-    Resource resource = resourceLoader.getResource("classpath:/.env.local");
+    Resource resource = resourceLoader.getResource("classpath:/.env.dev");
 
     return Dotenv.configure()
         .directory("/")
-        .filename(resource.exists() ? ".env.local" : ".env")
+        .filename(resource.exists() ? ".env.dev" : ".env")
         .load();
   }
 }

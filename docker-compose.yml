@@ -1,48 +1,52 @@
 version: '3.1'
 
 services:
-  smartthermostat-backend:
+  smartthermostat-temperatures-backend:
     build: .
-    image: smartthermostat-backend
-    container_name: smartthermostat-backend
+    image: "smartthermostat-temperatures-backend:latest"
+    container_name: "smartthermostat-temperatures-backend"
+    restart: unless-stopped
     environment:
-      TEMPERATURES_SERVER_PORT: ${TEMPERATURES_SERVER_PORT}
+      TEMPERATURES_SERVER_PORT: "${TEMPERATURES_SERVER_PORT}"
     ports:
       - "${TEMPERATURES_SERVER_PORT}:${TEMPERATURES_SERVER_PORT}"
     depends_on:
-      - db
-    links:
-      - db
+      - smartthermostat-temperatures-db
+      - smartthermostat-rabbitmq
     networks:
-      - db
-      - default
+      - app
 
-  db:
-    image: mysql
+  smartthermostat-temperatures-db:
+    image: "mysql:8"
+    container_name: "smartthermostat-temperatures-db"
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: "${TEMPERATURES_DATABASE_PASSWORD}"
     ports:
       - "3306:3306"
     volumes:
-      - db:/var/lib/mysql
+      - smartthermostat-temperatures-db:/var/lib/mysql
     networks:
-      - db
-      - default
+      - app
 
-  adminer:
-    image: adminer
-    restart: always
+  smartthermostat-rabbitmq:
+    container_name: "smartthermostat-rabbitmq"
+    image: "rabbitmq:3.9.13-management"
+    platform: linux/amd64
+    restart: unless-stopped
     ports:
-      - "10000:8080"
+      - "5630:5672"
+      - "9000:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS}"
     networks:
-      - db
-      - default
+      - app
 
 volumes:
-  db:
+  smartthermostat-temperatures-db:
     driver: local
 
 networks:
-  db:
+  app:
