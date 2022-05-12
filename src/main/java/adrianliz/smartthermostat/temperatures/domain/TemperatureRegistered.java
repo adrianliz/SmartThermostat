@@ -10,6 +10,13 @@ public final class TemperatureRegistered extends DomainEvent {
   private final double celsiusRegistered;
   private final long timestamp;
 
+  public TemperatureRegistered() {
+    super(null);
+
+    this.celsiusRegistered = 0;
+    this.timestamp = 0;
+  }
+
   public TemperatureRegistered(String aggregateId, double celsiusRegistered, long timestamp) {
     super(aggregateId);
     this.celsiusRegistered = celsiusRegistered;
@@ -50,7 +57,7 @@ public final class TemperatureRegistered extends DomainEvent {
         eventId,
         occurredOn,
         (double) body.get("celsiusRegistered"),
-        (long) body.get("timestamp"));
+        (int) body.get("timestamp"));
   }
 
   public double celsisusRegistered() {

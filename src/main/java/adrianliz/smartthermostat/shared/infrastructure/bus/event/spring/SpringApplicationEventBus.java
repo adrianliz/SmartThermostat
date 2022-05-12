@@ -1,4 +1,4 @@
-package adrianliz.smartthermostat.shared.infrastructure.bus.event;
+package adrianliz.smartthermostat.shared.infrastructure.bus.event.spring;
 
 import adrianliz.smartthermostat.shared.domain.Service;
 import adrianliz.smartthermostat.shared.domain.bus.event.DomainEvent;

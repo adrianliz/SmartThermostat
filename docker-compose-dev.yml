@@ -24,8 +24,8 @@ services:
       - "5630:5672"
       - "9000:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER}"
-      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS}"
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_LOGIN}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASSWORD}"
     networks:
       - app
 

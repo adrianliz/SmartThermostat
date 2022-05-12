@@ -70,8 +70,8 @@ public final class ApiExceptionMiddleware implements Filter {
             : exception.getCause();
 
     int statusCode = statusFor(errorMapping, error);
-    String errorCode = errorCodeFor(error);
-    String errorMessage = error.getMessage();
+    final String errorCode = errorCodeFor(error);
+    final String errorMessage = error.getMessage();
 
     httpResponse.reset();
     httpResponse.setHeader("Content-Type", "application/json");

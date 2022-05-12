@@ -5,6 +5,7 @@ import adrianliz.smartthermostat.shared.domain.bus.command.CommandBus;
 import adrianliz.smartthermostat.shared.domain.bus.query.QueryBus;
 import adrianliz.smartthermostat.shared.infrastructure.spring.ApiController;
 import adrianliz.smartthermostat.temperatures.application.TemperatureResponse;
+import adrianliz.smartthermostat.temperatures.application.registrar.RegistrarTemperatureCommand;
 import adrianliz.smartthermostat.temperatures.application.search_last.SearchLastTemperatureQuery;
 import adrianliz.smartthermostat.temperatures.domain.TemperatureNotExists;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,13 +36,22 @@ public final class TemperaturesHttpController extends ApiController {
   @PostMapping(
       value = "/temperatures/enable-registrar",
       produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<String> subscribe(@RequestParam(value = "topic", required = false) String topic) {
+  ResponseEntity<String> enableRegistrar(
+      @RequestParam(value = "topic", required = false) String topic) {
     try {
       this.mqttController.subscribe(topic);
       return ResponseEntity.ok().build();
     } catch (MqttException ex) {
       return ResponseEntity.internalServerError().body(ex.getMessage());
     }
+  }
+
+  @PostMapping(value = "/temperatures/", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<String> registrar(
+      @RequestBody RegistrarTemperatureCommand registrarTemperatureCommand) {
+
+    super.dispatch(registrarTemperatureCommand);
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping(value = "/temperatures/last", produces = MediaType.APPLICATION_JSON_VALUE)

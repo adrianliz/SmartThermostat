@@ -15,6 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
 @Controller
+@adrianliz.smartthermostat.shared.domain.bus.event.DomainEventSubscriber({
+  TemperatureRegistered.class
+})
 public final class TemperaturesWebSocketController {
 
   private final QueryBus queryBus;
@@ -65,8 +68,7 @@ public final class TemperaturesWebSocketController {
         event.getUser().getName(), "/temperatures/last", getLastTemperature());
   }
 
-  @EventListener(TemperatureRegistered.class)
-  public void sendTemperature(TemperatureRegistered temperatureRegistered) {
-    template.convertAndSend("/temperatures/last", temperatureRegistered);
+  public void on(TemperatureRegistered event) {
+    template.convertAndSend("/temperatures/last", event.celsisusRegistered());
   }
 }

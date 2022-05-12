@@ -31,16 +31,16 @@ services:
       - app
 
   smartthermostat-rabbitmq:
-    container_name: "smartthermostat-rabbitmq"
     image: "rabbitmq:3.9.13-management"
+    container_name: "smartthermostat-rabbitmq"
     platform: linux/amd64
     restart: unless-stopped
     ports:
       - "5630:5672"
       - "9000:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER}"
-      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS}"
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_LOGIN}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASSWORD}"
     networks:
       - app
 

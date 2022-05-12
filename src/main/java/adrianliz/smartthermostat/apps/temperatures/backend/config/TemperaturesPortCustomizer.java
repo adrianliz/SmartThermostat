@@ -12,15 +12,15 @@ public class TemperaturesPortCustomizer
 
   private final Parameter param;
 
-  public TemperaturesPortCustomizer(Parameter param) {
+  public TemperaturesPortCustomizer(final Parameter param) {
     this.param = param;
   }
 
   @Override
-  public void customize(ConfigurableWebServerFactory factory) {
+  public void customize(final ConfigurableWebServerFactory factory) {
     try {
       factory.setPort(param.getInt("TEMPERATURES_SERVER_PORT"));
-    } catch (ParameterNotExist ex) {
+    } catch (final ParameterNotExist ex) {
       ex.printStackTrace();
     }
   }
