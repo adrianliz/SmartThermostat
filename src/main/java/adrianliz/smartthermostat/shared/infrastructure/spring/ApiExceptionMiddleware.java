@@ -19,70 +19,76 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.util.NestedServletException;
+import org.springframework.web.util.ServletRequestPathUtils;
 
 public final class ApiExceptionMiddleware implements Filter {
 
   private final RequestMappingHandlerMapping mapping;
 
-  public ApiExceptionMiddleware(RequestMappingHandlerMapping mapping) {
+  public ApiExceptionMiddleware(final RequestMappingHandlerMapping mapping) {
     this.mapping = mapping;
   }
 
   @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+  public void doFilter(
+      final ServletRequest request, final ServletResponse response, final FilterChain chain)
       throws ServletException {
-    HttpServletRequest httpRequest = ((HttpServletRequest) request);
-    HttpServletResponse httpResponse = ((HttpServletResponse) response);
+    final HttpServletRequest httpRequest = ((HttpServletRequest) request);
+    final HttpServletResponse httpResponse = ((HttpServletResponse) response);
 
     try {
-      HandlerExecutionChain handlerChain = mapping.getHandler(httpRequest);
+      if (!ServletRequestPathUtils.hasParsedRequestPath(httpRequest)) {
+        ServletRequestPathUtils.parseAndCache(httpRequest);
+      }
+
+      final HandlerExecutionChain handlerChain = mapping.getHandler(httpRequest);
       if (handlerChain == null) {
         chain.doFilter(request, response);
       } else {
-        Object possibleController = ((HandlerMethod) handlerChain.getHandler()).getBean();
+        final Object possibleController = ((HandlerMethod) handlerChain.getHandler()).getBean();
 
         try {
           chain.doFilter(request, response);
-        } catch (NestedServletException exception) {
+        } catch (final NestedServletException exception) {
           if (possibleController instanceof ApiController) {
             handleCustomError(
                 response, httpResponse, (ApiController) possibleController, exception);
           }
         }
       }
-    } catch (Exception e) {
+    } catch (final Exception e) {
       throw new ServletException(e);
     }
   }
 
   private void handleCustomError(
-      ServletResponse response,
-      HttpServletResponse httpResponse,
-      ApiController possibleController,
-      NestedServletException exception)
+      final ServletResponse response,
+      final HttpServletResponse httpResponse,
+      final ApiController possibleController,
+      final NestedServletException exception)
       throws IOException {
-    HashMap<Class<? extends DomainError>, HttpStatus> errorMapping =
+    final HashMap<Class<? extends DomainError>, HttpStatus> errorMapping =
         possibleController.errorMapping();
-    Throwable error =
+    final Throwable error =
         (exception.getCause() instanceof CommandHandlerExecutionError
                 || exception.getCause() instanceof QueryHandlerExecutionError)
             ? exception.getCause().getCause()
             : exception.getCause();
 
-    int statusCode = statusFor(errorMapping, error);
+    final int statusCode = statusFor(errorMapping, error);
     final String errorCode = errorCodeFor(error);
     final String errorMessage = error.getMessage();
 
     httpResponse.reset();
     httpResponse.setHeader("Content-Type", "application/json");
     httpResponse.setStatus(statusCode);
-    PrintWriter writer = response.getWriter();
+    final PrintWriter writer = response.getWriter();
     writer.write(
         String.format("{\"error_code\": \"%s\", \"message\": \"%s\"}", errorCode, errorMessage));
     writer.close();
   }
 
-  private String errorCodeFor(Throwable error) {
+  private String errorCodeFor(final Throwable error) {
     if (error instanceof DomainError) {
       return ((DomainError) error).errorCode();
     }
@@ -91,7 +97,7 @@ public final class ApiExceptionMiddleware implements Filter {
   }
 
   private int statusFor(
-      HashMap<Class<? extends DomainError>, HttpStatus> errorMapping, Throwable error) {
+      final HashMap<Class<? extends DomainError>, HttpStatus> errorMapping, final Throwable error) {
     return errorMapping.getOrDefault(error.getClass(), HttpStatus.INTERNAL_SERVER_ERROR).value();
   }
 }
