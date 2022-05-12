@@ -13,22 +13,23 @@ public final class TemperatureRegistered extends DomainEvent {
   public TemperatureRegistered() {
     super(null);
 
-    this.celsiusRegistered = 0;
-    this.timestamp = 0;
+    celsiusRegistered = 0;
+    timestamp = 0;
   }
 
-  public TemperatureRegistered(String aggregateId, double celsiusRegistered, long timestamp) {
+  public TemperatureRegistered(
+      final String aggregateId, final double celsiusRegistered, final long timestamp) {
     super(aggregateId);
     this.celsiusRegistered = celsiusRegistered;
     this.timestamp = timestamp;
   }
 
   public TemperatureRegistered(
-      String aggregateId,
-      String eventId,
-      String occurredOn,
-      double celsiusRegistered,
-      long timestamp) {
+      final String aggregateId,
+      final String eventId,
+      final String occurredOn,
+      final double celsiusRegistered,
+      final long timestamp) {
     super(aggregateId, eventId, occurredOn);
     this.celsiusRegistered = celsiusRegistered;
     this.timestamp = timestamp;
@@ -41,7 +42,7 @@ public final class TemperatureRegistered extends DomainEvent {
 
   @Override
   public HashMap<String, Serializable> toPrimitives() {
-    return new HashMap<String, Serializable>() {
+    return new HashMap<>() {
       {
         put("celsiusRegistered", celsiusRegistered);
         put("timestamp", timestamp);
@@ -51,7 +52,10 @@ public final class TemperatureRegistered extends DomainEvent {
 
   @Override
   public DomainEvent fromPrimitives(
-      String aggregateId, HashMap<String, Serializable> body, String eventId, String occurredOn) {
+      final String aggregateId,
+      final HashMap<String, Serializable> body,
+      final String eventId,
+      final String occurredOn) {
     return new TemperatureRegistered(
         aggregateId,
         eventId,
@@ -69,10 +73,14 @@ public final class TemperatureRegistered extends DomainEvent {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    TemperatureRegistered that = (TemperatureRegistered) o;
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    final TemperatureRegistered that = (TemperatureRegistered) o;
     return (Double.compare(that.celsiusRegistered, celsiusRegistered) == 0
         && timestamp == that.timestamp);
   }

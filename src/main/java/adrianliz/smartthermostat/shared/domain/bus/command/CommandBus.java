@@ -1,5 +1,5 @@
 package adrianliz.smartthermostat.shared.domain.bus.command;
 
 public interface CommandBus {
-  void dispatch(Command command) throws CommandHandlerExecutionError;
+  void dispatch(final Command command) throws CommandHandlerExecutionError;
 }

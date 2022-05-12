@@ -23,14 +23,15 @@ public final class TemperaturesWebSocketController {
   private final QueryBus queryBus;
   private final SimpMessagingTemplate template;
 
-  public TemperaturesWebSocketController(QueryBus queryBus, SimpMessagingTemplate template) {
+  public TemperaturesWebSocketController(
+      final QueryBus queryBus, final SimpMessagingTemplate template) {
     this.queryBus = queryBus;
     this.template = template;
   }
 
   private HashMap<String, Serializable> getLastTemperature() {
     try {
-      TemperatureResponse temperature = queryBus.ask(new SearchLastTemperatureQuery());
+      final TemperatureResponse temperature = queryBus.ask(new SearchLastTemperatureQuery());
 
       return new HashMap<>() {
         {
@@ -40,11 +41,11 @@ public final class TemperaturesWebSocketController {
           put("timestamp", temperature.timestamp());
         }
       };
-    } catch (QueryHandlerExecutionError ex) {
-      Throwable throwable = ex.getCause();
+    } catch (final QueryHandlerExecutionError ex) {
+      final Throwable throwable = ex.getCause();
 
       if (throwable instanceof DomainError) {
-        DomainError error = (DomainError) throwable;
+        final DomainError error = (DomainError) throwable;
 
         return new HashMap<>() {
           {
@@ -63,12 +64,12 @@ public final class TemperaturesWebSocketController {
   }
 
   @EventListener
-  public void handleSubscribeEvent(SessionSubscribeEvent event) {
+  public void handleSubscribeEvent(final SessionSubscribeEvent event) {
     template.convertAndSendToUser(
         event.getUser().getName(), "/temperatures/last", getLastTemperature());
   }
 
-  public void on(TemperatureRegistered event) {
+  public void on(final TemperatureRegistered event) {
     template.convertAndSend("/temperatures/last", event.celsisusRegistered());
   }
 }

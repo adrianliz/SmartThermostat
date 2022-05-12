@@ -24,22 +24,22 @@ public final class TemperaturesMqttController implements MqttCallback {
   private final Gson jsonClient;
   private String defaultTopic;
 
-  public TemperaturesMqttController(CommandBus commandBus, Parameter config)
+  public TemperaturesMqttController(final CommandBus commandBus, final Parameter config)
       throws ParameterNotExist, MqttException {
     this.commandBus = commandBus;
 
-    this.client = createClient(config);
-    this.client.setCallback(this);
+    client = createClient(config);
+    client.setCallback(this);
 
-    this.options = new MqttConnectOptions();
+    options = new MqttConnectOptions();
     options.setCleanSession(true);
     options.setAutomaticReconnect(true);
 
-    this.jsonClient = new Gson();
+    jsonClient = new Gson();
   }
 
-  private IMqttClient createClient(Parameter config) throws ParameterNotExist, MqttException {
-    this.defaultTopic = config.get("TEMPERATURES_MQTT_TOPIC");
+  private IMqttClient createClient(final Parameter config) throws ParameterNotExist, MqttException {
+    defaultTopic = config.get("TEMPERATURES_MQTT_TOPIC");
     return new MqttClient(
         config.get("TEMPERATURES_MQTT_BROKER_URI"), config.get("TEMPERATURES_MQTT_CLIENT_ID"));
   }
@@ -50,25 +50,25 @@ public final class TemperaturesMqttController implements MqttCallback {
     }
   }
 
-  void subscribe(String topic) throws MqttException {
-    this.connect();
+  void subscribe(final String topic) throws MqttException {
+    connect();
     client.subscribe(topic == null ? defaultTopic : topic);
   }
 
   @Override
-  public void connectionLost(Throwable throwable) {
+  public void connectionLost(final Throwable throwable) {
     System.err.println("Connection to MQTT broker was lost");
     System.err.println("Cause -->" + throwable.getCause().getMessage());
   }
 
   @Override
-  public void messageArrived(String s, MqttMessage message) throws IOException {
-    RegistrarTemperatureCommand command =
+  public void messageArrived(final String s, final MqttMessage message) throws IOException {
+    final RegistrarTemperatureCommand command =
         jsonClient.fromJson(new String(message.getPayload()), RegistrarTemperatureCommand.class);
 
     commandBus.dispatch(command);
   }
 
   @Override
-  public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
+  public void deliveryComplete(final IMqttDeliveryToken iMqttDeliveryToken) {}
 }

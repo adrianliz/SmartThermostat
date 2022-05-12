@@ -4,7 +4,7 @@ import adrianliz.smartthermostat.shared.domain.Identifier;
 
 public final class SensorId extends Identifier {
 
-  public SensorId(String value) {
+  public SensorId(final String value) {
     super(value);
   }
 

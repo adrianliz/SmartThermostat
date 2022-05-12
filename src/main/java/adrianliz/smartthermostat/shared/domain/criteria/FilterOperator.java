@@ -10,11 +10,11 @@ public enum FilterOperator {
 
   private final String operator;
 
-  FilterOperator(String operator) {
+  FilterOperator(final String operator) {
     this.operator = operator;
   }
 
-  public static FilterOperator fromValue(String value) {
+  public static FilterOperator fromValue(final String value) {
     switch (value) {
       case "=":
         return FilterOperator.EQUAL;

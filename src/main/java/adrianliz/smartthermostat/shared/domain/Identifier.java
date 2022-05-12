@@ -8,14 +8,14 @@ public abstract class Identifier implements Serializable {
 
   protected final String value;
 
-  public Identifier(String value) {
+  public Identifier(final String value) {
     ensureValidUuid(value);
 
     this.value = value;
   }
 
   protected Identifier() {
-    this.value = null;
+    value = null;
   }
 
   public String value() {
@@ -23,14 +23,14 @@ public abstract class Identifier implements Serializable {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Identifier that = (Identifier) o;
+    final Identifier that = (Identifier) o;
     return value.equals(that.value);
   }
 
@@ -39,7 +39,7 @@ public abstract class Identifier implements Serializable {
     return Objects.hash(value);
   }
 
-  private void ensureValidUuid(String value) throws IllegalArgumentException {
+  private void ensureValidUuid(final String value) throws IllegalArgumentException {
     UUID.fromString(value);
   }
 }

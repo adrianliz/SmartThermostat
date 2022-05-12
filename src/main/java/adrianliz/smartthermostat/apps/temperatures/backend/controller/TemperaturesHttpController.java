@@ -28,7 +28,9 @@ public final class TemperaturesHttpController extends ApiController {
   private final TemperaturesMqttController mqttController;
 
   public TemperaturesHttpController(
-      TemperaturesMqttController mqttController, QueryBus queryBus, CommandBus commandBus) {
+      final TemperaturesMqttController mqttController,
+      final QueryBus queryBus,
+      final CommandBus commandBus) {
     super(queryBus, commandBus);
     this.mqttController = mqttController;
   }
@@ -37,18 +39,18 @@ public final class TemperaturesHttpController extends ApiController {
       value = "/temperatures/enable-registrar",
       produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<String> enableRegistrar(
-      @RequestParam(value = "topic", required = false) String topic) {
+      @RequestParam(value = "topic", required = false) final String topic) {
     try {
-      this.mqttController.subscribe(topic);
+      mqttController.subscribe(topic);
       return ResponseEntity.ok().build();
-    } catch (MqttException ex) {
+    } catch (final MqttException ex) {
       return ResponseEntity.internalServerError().body(ex.getMessage());
     }
   }
 
   @PostMapping(value = "/temperatures/", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<String> registrar(
-      @RequestBody RegistrarTemperatureCommand registrarTemperatureCommand) {
+      @RequestBody final RegistrarTemperatureCommand registrarTemperatureCommand) {
 
     super.dispatch(registrarTemperatureCommand);
     return ResponseEntity.ok().build();
@@ -56,7 +58,7 @@ public final class TemperaturesHttpController extends ApiController {
 
   @GetMapping(value = "/temperatures/last", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<HashMap<String, Serializable>> getLastTemperature() {
-    TemperatureResponse temperature = ask(new SearchLastTemperatureQuery());
+    final TemperatureResponse temperature = ask(new SearchLastTemperatureQuery());
 
     return ResponseEntity.ok()
         .body(

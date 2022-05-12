@@ -8,7 +8,7 @@ public final class TemperatureNotExists extends DomainError {
     super("temperature_not_exists", "The temperature doesn't exists");
   }
 
-  public TemperatureNotExists(TemperatureId id) {
+  public TemperatureNotExists(final TemperatureId id) {
     super("temperature_not_exists", String.format("The temperature <%s> doesn't exists", id));
   }
 }

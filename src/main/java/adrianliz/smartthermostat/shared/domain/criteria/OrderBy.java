@@ -4,7 +4,7 @@ import adrianliz.smartthermostat.shared.domain.StringValueObject;
 
 public final class OrderBy extends StringValueObject {
 
-  public OrderBy(String value) {
+  public OrderBy(final String value) {
     super(value);
   }
 }

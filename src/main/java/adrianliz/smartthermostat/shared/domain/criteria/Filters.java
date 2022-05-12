@@ -9,11 +9,11 @@ public final class Filters {
 
   private final List<Filter> filters;
 
-  public Filters(List<Filter> filters) {
+  public Filters(final List<Filter> filters) {
     this.filters = filters;
   }
 
-  public static Filters fromValues(List<HashMap<String, String>> filters) {
+  public static Filters fromValues(final List<HashMap<String, String>> filters) {
     return new Filters(filters.stream().map(Filter::fromValues).collect(Collectors.toList()));
   }
 

@@ -7,12 +7,12 @@ public final class Order {
   private final OrderBy orderBy;
   private final OrderType orderType;
 
-  public Order(OrderBy orderBy, OrderType orderType) {
+  public Order(final OrderBy orderBy, final OrderType orderType) {
     this.orderBy = orderBy;
     this.orderType = orderType;
   }
 
-  public static Order fromValues(Optional<String> orderBy, Optional<String> orderType) {
+  public static Order fromValues(final Optional<String> orderBy, final Optional<String> orderType) {
     return orderBy
         .map(order -> new Order(new OrderBy(order), OrderType.valueOf(orderType.orElse("ASC"))))
         .orElseGet(Order::none);
@@ -22,11 +22,11 @@ public final class Order {
     return new Order(new OrderBy(""), OrderType.NONE);
   }
 
-  public static Order desc(String orderBy) {
+  public static Order desc(final String orderBy) {
     return new Order(new OrderBy(orderBy), OrderType.DESC);
   }
 
-  public static Order asc(String orderBy) {
+  public static Order asc(final String orderBy) {
     return new Order(new OrderBy(orderBy), OrderType.ASC);
   }
 

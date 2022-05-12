@@ -4,7 +4,7 @@ import adrianliz.smartthermostat.shared.domain.LongValueObject;
 
 public final class Timestamp extends LongValueObject {
 
-  public Timestamp(Long value) {
+  public Timestamp(final Long value) {
     super(value);
   }
 

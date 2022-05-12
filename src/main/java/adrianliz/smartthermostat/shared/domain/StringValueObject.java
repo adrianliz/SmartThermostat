@@ -6,7 +6,7 @@ public abstract class StringValueObject {
 
   private final String value;
 
-  public StringValueObject(String value) {
+  public StringValueObject(final String value) {
     this.value = value;
   }
 
@@ -16,18 +16,18 @@ public abstract class StringValueObject {
 
   @Override
   public String toString() {
-    return this.value();
+    return value();
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
     if (!(o instanceof StringValueObject)) {
       return false;
     }
-    StringValueObject that = (StringValueObject) o;
+    final StringValueObject that = (StringValueObject) o;
     return Objects.equals(value, that.value);
   }
 

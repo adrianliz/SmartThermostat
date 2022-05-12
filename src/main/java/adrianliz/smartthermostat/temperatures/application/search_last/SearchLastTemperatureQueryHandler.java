@@ -10,12 +10,12 @@ public final class SearchLastTemperatureQueryHandler
 
   private final LastTemperatureSearcher searcher;
 
-  public SearchLastTemperatureQueryHandler(LastTemperatureSearcher searcher) {
+  public SearchLastTemperatureQueryHandler(final LastTemperatureSearcher searcher) {
     this.searcher = searcher;
   }
 
   @Override
-  public TemperatureResponse handle(SearchLastTemperatureQuery query) {
+  public TemperatureResponse handle(final SearchLastTemperatureQuery query) {
     return searcher.search();
   }
 }

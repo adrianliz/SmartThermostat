@@ -8,20 +8,20 @@ public final class Filter {
   private final FilterOperator operator;
   private final FilterValue value;
 
-  public Filter(FilterField field, FilterOperator operator, FilterValue value) {
+  public Filter(final FilterField field, final FilterOperator operator, final FilterValue value) {
     this.field = field;
     this.operator = operator;
     this.value = value;
   }
 
-  public static Filter create(String field, String operator, String value) {
+  public static Filter create(final String field, final String operator, final String value) {
     return new Filter(
         new FilterField(field),
         FilterOperator.fromValue(operator.toUpperCase()),
         new FilterValue(value));
   }
 
-  public static Filter fromValues(HashMap<String, String> values) {
+  public static Filter fromValues(final HashMap<String, String> values) {
     return new Filter(
         new FilterField(values.get("field")),
         FilterOperator.fromValue(values.get("operator")),

@@ -21,29 +21,29 @@ public class MySqlTemperaturesRepository extends HibernateRepository<Temperature
     implements TemperaturesRepository {
 
   public MySqlTemperaturesRepository(
-      @Qualifier("temperatures-session_factory") SessionFactory sessionFactory) {
+      @Qualifier("temperatures-session_factory") final SessionFactory sessionFactory) {
     super(sessionFactory, Temperature.class);
   }
 
   @Override
-  public void save(Temperature temperature) {
+  public void save(final Temperature temperature) {
     persist(temperature);
   }
 
   @Override
   public Optional<Temperature> searchLast() {
-    Criteria criteria =
+    final Criteria criteria =
         new Criteria(Filters.none(), Order.desc("timestamp"), Optional.of(1), Optional.empty());
     return byCriteria(criteria).stream().findFirst();
   }
 
   @Override
-  public List<Temperature> getBetween(Timestamp start, Timestamp end) {
+  public List<Temperature> getBetween(final Timestamp start, final Timestamp end) {
     return null;
   }
 
   @Override
-  public Optional<Temperature> search(TemperatureId id) {
+  public Optional<Temperature> search(final TemperatureId id) {
     return Optional.empty();
   }
 }

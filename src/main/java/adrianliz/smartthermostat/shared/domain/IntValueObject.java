@@ -6,7 +6,7 @@ public abstract class IntValueObject {
 
   private final Integer value;
 
-  public IntValueObject(Integer value) {
+  public IntValueObject(final Integer value) {
     this.value = value;
   }
 
@@ -15,14 +15,14 @@ public abstract class IntValueObject {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    IntValueObject that = (IntValueObject) o;
+    final IntValueObject that = (IntValueObject) o;
     return value.equals(that.value);
   }
 

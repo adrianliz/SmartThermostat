@@ -12,13 +12,13 @@ public abstract class DomainEvent {
   private String eventId;
   private String occurredOn;
 
-  public DomainEvent(String aggregateId) {
+  public DomainEvent(final String aggregateId) {
     this.aggregateId = aggregateId;
-    this.eventId = UUID.randomUUID().toString();
-    this.occurredOn = Utils.dateToString(LocalDateTime.now());
+    eventId = UUID.randomUUID().toString();
+    occurredOn = Utils.dateToString(LocalDateTime.now());
   }
 
-  public DomainEvent(String aggregateId, String eventId, String occurredOn) {
+  public DomainEvent(final String aggregateId, final String eventId, final String occurredOn) {
     this.aggregateId = aggregateId;
     this.eventId = eventId;
     this.occurredOn = occurredOn;

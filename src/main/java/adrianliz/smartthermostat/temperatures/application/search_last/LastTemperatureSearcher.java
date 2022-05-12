@@ -10,7 +10,7 @@ public final class LastTemperatureSearcher {
 
   private final TemperaturesRepository repository;
 
-  public LastTemperatureSearcher(TemperaturesRepository repository) {
+  public LastTemperatureSearcher(final TemperaturesRepository repository) {
     this.repository = repository;
   }
 

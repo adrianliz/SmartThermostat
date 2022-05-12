@@ -14,19 +14,21 @@ public final class InMemoryTemperaturesRepository implements TemperaturesReposit
   private final List<Temperature> temperatures = new ArrayList<>();
 
   @Override
-  public void save(Temperature temperature) {
+  public void save(final Temperature temperature) {
     temperatures.add(temperature);
   }
 
   @Override
   public Optional<Temperature> searchLast() {
-    if (temperatures.isEmpty()) return Optional.empty();
+    if (temperatures.isEmpty()) {
+      return Optional.empty();
+    }
 
     return Optional.of(temperatures.get(temperatures.size() - 1));
   }
 
   @Override
-  public List<Temperature> getBetween(Timestamp start, Timestamp end) {
+  public List<Temperature> getBetween(final Timestamp start, final Timestamp end) {
     return temperatures.stream()
         .filter(
             temperature ->
@@ -36,8 +38,8 @@ public final class InMemoryTemperaturesRepository implements TemperaturesReposit
   }
 
   @Override
-  public Optional<Temperature> search(TemperatureId id) {
-    for (Temperature temperature : temperatures) {
+  public Optional<Temperature> search(final TemperatureId id) {
+    for (final Temperature temperature : temperatures) {
       if (temperature.id().equals(id)) {
         return Optional.of(temperature);
       }

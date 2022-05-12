@@ -9,18 +9,22 @@ public final class Criteria {
   private final Optional<Integer> limit;
   private final Optional<Integer> offset;
 
-  public Criteria(Filters filters, Order order, Optional<Integer> limit, Optional<Integer> offset) {
+  public Criteria(
+      final Filters filters,
+      final Order order,
+      final Optional<Integer> limit,
+      final Optional<Integer> offset) {
     this.filters = filters;
     this.order = order;
     this.limit = limit;
     this.offset = offset;
   }
 
-  public Criteria(Filters filters, Order order) {
+  public Criteria(final Filters filters, final Order order) {
     this.filters = filters;
     this.order = order;
-    this.limit = Optional.empty();
-    this.offset = Optional.empty();
+    limit = Optional.empty();
+    offset = Optional.empty();
   }
 
   public Filters filters() {

@@ -15,14 +15,17 @@ public final class TemperatureRegistrar {
   private final TemperaturesRepository repository;
   private final EventBus eventBus;
 
-  public TemperatureRegistrar(TemperaturesRepository repository, EventBus eventBus) {
+  public TemperatureRegistrar(final TemperaturesRepository repository, final EventBus eventBus) {
     this.repository = repository;
     this.eventBus = eventBus;
   }
 
   public void registrar(
-      TemperatureId id, SensorId sensorId, Celsius celsiusRegistered, Timestamp timestamp) {
-    Temperature temperature = Temperature.create(id, sensorId, celsiusRegistered, timestamp);
+      final TemperatureId id,
+      final SensorId sensorId,
+      final Celsius celsiusRegistered,
+      final Timestamp timestamp) {
+    final Temperature temperature = Temperature.create(id, sensorId, celsiusRegistered, timestamp);
 
     repository.save(temperature);
     eventBus.publish(temperature.pullDomainEvents());

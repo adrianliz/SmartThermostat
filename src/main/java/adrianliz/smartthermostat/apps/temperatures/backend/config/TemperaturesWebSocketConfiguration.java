@@ -14,30 +14,30 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class TemperaturesWebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
   final Parameter config;
 
-  public TemperaturesWebSocketConfiguration(Parameter config) {
+  public TemperaturesWebSocketConfiguration(final Parameter config) {
     this.config = config;
   }
 
   @Override
-  public void registerStompEndpoints(StompEndpointRegistry registry) {
+  public void registerStompEndpoints(final StompEndpointRegistry registry) {
     try {
       registry
           .addEndpoint(config.get("TEMPERATURES_STOMP_ENDPOINT"))
           .setHandshakeHandler(new AssignPrincipalHandshakeHandler())
           .setAllowedOriginPatterns("*")
           .withSockJS();
-    } catch (ParameterNotExist ex) {
+    } catch (final ParameterNotExist ex) {
       ex.printStackTrace();
     }
   }
 
   @Override
-  public void configureMessageBroker(MessageBrokerRegistry registry) {
+  public void configureMessageBroker(final MessageBrokerRegistry registry) {
     try {
       registry.enableSimpleBroker(config.get("TEMPERATURES_STOMP_TOPIC"));
       registry.setApplicationDestinationPrefixes(config.get("TEMPERATURES_STOMP_APP_PREFIX"));
       registry.setUserDestinationPrefix(config.get("TEMPERATURES_STOMP_USER_PREFIX"));
-    } catch (ParameterNotExist ex) {
+    } catch (final ParameterNotExist ex) {
       ex.printStackTrace();
     }
   }

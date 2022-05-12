@@ -20,7 +20,7 @@ public class TemperaturesHibernateConfiguration {
   private final Parameter config;
 
   public TemperaturesHibernateConfiguration(
-      HibernateConfigurationFactory factory, Parameter config) {
+      final HibernateConfigurationFactory factory, final Parameter config) {
     this.factory = factory;
     this.config = config;
   }

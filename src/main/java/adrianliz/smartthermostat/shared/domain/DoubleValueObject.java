@@ -6,7 +6,7 @@ public class DoubleValueObject {
 
   private final Double value;
 
-  public DoubleValueObject(Double value) {
+  public DoubleValueObject(final Double value) {
     this.value = value;
   }
 
@@ -15,10 +15,14 @@ public class DoubleValueObject {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    DoubleValueObject that = (DoubleValueObject) o;
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    final DoubleValueObject that = (DoubleValueObject) o;
     return Objects.equals(value, that.value);
   }
 

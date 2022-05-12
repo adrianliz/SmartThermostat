@@ -11,14 +11,18 @@ public final class TemperatureResponse implements Response {
   private final Double celsiusRegistered;
   private final long timestamp;
 
-  public TemperatureResponse(String id, String sensorId, Double celsiusRegistered, long timestamp) {
+  public TemperatureResponse(
+      final String id,
+      final String sensorId,
+      final Double celsiusRegistered,
+      final long timestamp) {
     this.id = id;
     this.sensorId = sensorId;
     this.celsiusRegistered = celsiusRegistered;
     this.timestamp = timestamp;
   }
 
-  public static TemperatureResponse fromAggregate(Temperature temperature) {
+  public static TemperatureResponse fromAggregate(final Temperature temperature) {
     return new TemperatureResponse(
         temperature.id().value(),
         temperature.sensorId().value(),
@@ -43,10 +47,14 @@ public final class TemperatureResponse implements Response {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    TemperatureResponse response = (TemperatureResponse) o;
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    final TemperatureResponse response = (TemperatureResponse) o;
     return (timestamp == response.timestamp
         && Objects.equals(id, response.id)
         && Objects.equals(sensorId, response.sensorId)

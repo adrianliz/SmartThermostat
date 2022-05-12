@@ -4,7 +4,7 @@ import adrianliz.smartthermostat.shared.domain.StringValueObject;
 
 public final class FilterField extends StringValueObject {
 
-  public FilterField(String value) {
+  public FilterField(final String value) {
     super(value);
   }
 }

@@ -11,7 +11,10 @@ public final class Temperature extends AggregateRoot {
   private final Timestamp timestamp;
 
   public Temperature(
-      TemperatureId id, SensorId sensorId, Celsius celsiusRegistered, Timestamp timestamp) {
+      final TemperatureId id,
+      final SensorId sensorId,
+      final Celsius celsiusRegistered,
+      final Timestamp timestamp) {
     this.id = id;
     this.sensorId = sensorId;
     this.celsiusRegistered = celsiusRegistered;
@@ -26,11 +29,11 @@ public final class Temperature extends AggregateRoot {
   }
 
   public static Temperature create(
-      TemperatureId temperatureId,
-      SensorId sensorId,
-      Celsius celsiusRegistered,
-      Timestamp timestamp) {
-    Temperature temperature =
+      final TemperatureId temperatureId,
+      final SensorId sensorId,
+      final Celsius celsiusRegistered,
+      final Timestamp timestamp) {
+    final Temperature temperature =
         new Temperature(temperatureId, sensorId, celsiusRegistered, timestamp);
 
     temperature.record(
@@ -57,10 +60,14 @@ public final class Temperature extends AggregateRoot {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Temperature that = (Temperature) o;
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    final Temperature that = (Temperature) o;
     return (Objects.equals(id, that.id)
         && Objects.equals(sensorId, that.sensorId)
         && Objects.equals(celsiusRegistered, that.celsiusRegistered)
