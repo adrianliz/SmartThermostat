@@ -13,7 +13,7 @@ This is a side project developed for learning and practicing:
 ## 🚀 How to deploy it
 - Create new ``.env[.dev]`` file in ``apps/main/resources`` (see ``.env.dev`` example)
 
-- Execute ``mvn clean package``
+- Execute ``gradle bootJar``
 
 - Execute: ``docker-compose --file docker-compose-dev.yml --env-file apps/main/resources/.env.dev build && docker-compose --file docker-compose-dev.yml --env-file apps/main/resources/.env.dev up``
 for local development

@@ -1,4 +1,4 @@
-package adrianliz.smartthermostat.apps.temperatures.backend.config;
+package adrianliz.apps.backoffice.backend.config;
 
 import adrianliz.shared.infrastructure.config.Parameter;
 import adrianliz.shared.infrastructure.config.ParameterNotExist;
