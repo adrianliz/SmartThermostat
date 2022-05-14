@@ -1,0 +1,132 @@
+// Common for all projects
+allprojects {
+  apply plugin: 'java'
+  apply plugin: 'io.spring.dependency-management'
+  apply plugin: 'org.springframework.boot'
+
+  sourceCompatibility = 17
+  targetCompatibility = 17
+
+  repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+  }
+
+  test {
+    useJUnitPlatform()
+
+    testLogging {
+      events "passed", "skipped", "failed"
+    }
+  }
+
+  dependencies {
+    // Production
+    implementation 'org.springframework.boot:spring-boot-starter:2.6.7'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.7'
+    implementation 'org.springframework:spring-orm:5.3.19'
+    implementation 'org.springframework:spring-websocket:5.3.19'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp:2.6.7'
+    implementation 'org.hibernate:hibernate-core:5.6.8.Final'
+    implementation 'org.apache.tomcat:tomcat-dbcp:10.0.20'
+    implementation 'mysql:mysql-connector-java:8.0.29'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+    implementation 'io.github.cdimascio:dotenv-java:2.2.3'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'org.reflections:reflections:0.10.2'
+
+    // Runtime
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.6.7'
+
+    // Test
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+  }
+
+  task view_paths {
+    doLast { task ->
+      println "$task.project.name"
+      println "------------------"
+      println "Main: $sourceSets.main.java.srcDirTrees"
+      println "   Resources: $sourceSets.main.resources.srcDirTrees"
+      println "Tests: $sourceSets.test.java.srcDirTrees"
+      println "   Resources: $sourceSets.test.resources.srcDirTrees"
+    }
+  }
+}
+
+// All subprojects (located in src/*)
+subprojects {
+  group = "adrianliz.${rootProject.name}"
+
+  sourceSets {
+    main {
+      java { srcDirs = ['main'] }
+      resources { srcDirs = ['main/resources'] }
+    }
+
+    test {
+      java { srcDirs = ['test'] }
+      resources { srcDirs = ['test/resources'] }
+    }
+  }
+
+  dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.7'
+
+    testImplementation rootProject.sourceSets.main.output
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.7'
+
+    if (project.name != "shared") {
+      implementation project(":shared")
+      testImplementation project(":shared").sourceSets.test.output
+    }
+  }
+
+  bootJar {
+    enabled = false
+  }
+
+  jar {
+    enabled = true
+  }
+}
+
+// Main project (located in apps/)
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath('org.springframework.boot:spring-boot-gradle-plugin:2.6.7')
+  }
+}
+
+sourceSets {
+  main {
+    java { srcDirs = ['apps/main'] }
+    resources { srcDirs = ['apps/main/resources'] }
+  }
+
+  test {
+    java { srcDirs = ['apps/test'] }
+    resources { srcDirs = ['apps/test/resources'] }
+  }
+}
+
+bootJar {
+  archivesBaseName = 'smartthermostat'
+}
+
+dependencies {
+  implementation 'org.springframework.boot:spring-boot-starter-web:2.6.7'
+
+  implementation project(":shared")
+  implementation project(":backoffice")
+
+  testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.7'
+  testImplementation project(":shared").sourceSets.test.output
+}

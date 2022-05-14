@@ -1,0 +1,3 @@
+package adrianliz.shared.domain.bus.command;
+
+public interface Command {}

@@ -1,32 +1,37 @@
 version: '3.1'
 
 services:
-  smartthermostat-temperatures-backend:
+  smartthermostat-backoffice-backend:
     build: .
-    image: "smartthermostat-temperatures-backend:latest"
-    container_name: "smartthermostat-temperatures-backend"
+    image: "smartthermostat-backoffice-backend:latest"
+    container_name: "smartthermostat-backoffice-backend"
+    platform: linux/amd64
     restart: unless-stopped
     environment:
-      TEMPERATURES_SERVER_PORT: "${TEMPERATURES_SERVER_PORT}"
+      TEMPERATURES_SERVER_PORT: "${BACKOFFICE_BACKEND_SERVER_PORT}"
     ports:
-      - "${TEMPERATURES_SERVER_PORT}:${TEMPERATURES_SERVER_PORT}"
+      - "${BACKOFFICE_BACKEND_SERVER_PORT}:${BACKOFFICE_BACKEND_SERVER_PORT}"
     depends_on:
-      - smartthermostat-temperatures-db
+      - smartthermostat-backoffice-db
       - smartthermostat-rabbitmq
     networks:
       - app
 
-  smartthermostat-temperatures-db:
+  smartthermostat-backoffice-db:
     image: "mysql:8"
-    container_name: "smartthermostat-temperatures-db"
+    container_name: "smartthermostat-backoffice-db"
+    platform: linux/amd64
     command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: "${TEMPERATURES_DATABASE_PASSWORD}"
+      MYSQL_DATABASE: "${BACKOFFICE_DATABASE_NAME}"
+      MYSQL_USER: "${BACKOFFICE_DATABASE_USER}"
+      MYSQL_PASSWORD: "${BACKOFFICE_DATABASE_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${BACKOFFICE_DATABASE_PASSWORD}"
     ports:
-      - "3306:3306"
+      - "${BACKOFFICE_DATABASE_PORT}:${BACKOFFICE_DATABASE_PORT}"
     volumes:
-      - smartthermostat-temperatures-db:/var/lib/mysql
+      - smartthermostat-backoffice-db:/var/lib/mysql
     networks:
       - app
 
@@ -36,7 +41,7 @@ services:
     platform: linux/amd64
     restart: unless-stopped
     ports:
-      - "5630:5672"
+      - "${RABBITMQ_PORT}:${RABBITMQ_PORT}"
       - "9000:15672"
     environment:
       RABBITMQ_DEFAULT_USER: "${RABBITMQ_LOGIN}"
@@ -45,7 +50,7 @@ services:
       - app
 
 volumes:
-  smartthermostat-temperatures-db:
+  smartthermostat-backoffice-db:
     driver: local
 
 networks:

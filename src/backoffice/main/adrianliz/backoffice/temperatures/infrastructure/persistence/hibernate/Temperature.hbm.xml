@@ -1,0 +1,28 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="adrianliz.backoffice.temperatures.domain.Temperature" table="temperature">
+    <composite-id access="field" class="adrianliz.backoffice.temperatures.domain.TemperatureId"
+      name="id">
+      <key-property access="field" column="id" length="36" name="value" type="string"/>
+    </composite-id>
+
+    <component access="field" class="adrianliz.backoffice.temperatures.domain.SensorId"
+      name="sensorId">
+      <property access="field" column="sensor_id" length="36" name="value" type="string"/>
+    </component>
+
+    <component access="field"
+      class="adrianliz.backoffice.temperatures.domain.Celsius" name="celsiusRegistered">
+      <property access="field" column="celsius_registered" name="value" type="double"/>
+    </component>
+
+    <component access="field" class="adrianliz.backoffice.temperatures.domain.Timestamp"
+      name="timestamp">
+      <property access="field" column="timestamp" name="value" type="long"/>
+    </component>
+  </class>
+</hibernate-mapping>
