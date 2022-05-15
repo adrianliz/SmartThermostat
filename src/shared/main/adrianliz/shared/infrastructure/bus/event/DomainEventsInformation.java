@@ -1,6 +1,7 @@
 package adrianliz.shared.infrastructure.bus.event;
 
 import adrianliz.shared.domain.Service;
+import adrianliz.shared.domain.Utils;
 import adrianliz.shared.domain.bus.event.DomainEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ public final class DomainEventsInformation {
   HashMap<String, Class<? extends DomainEvent>> indexedDomainEvents;
 
   public DomainEventsInformation() {
-    final Reflections reflections = new Reflections("adrianliz.smartthermostat");
+    final Reflections reflections = new Reflections(Utils.ORGANIZATION_NAME);
     final Set<Class<? extends DomainEvent>> classes = reflections.getSubTypesOf(DomainEvent.class);
 
     try {

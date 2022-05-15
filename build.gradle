@@ -29,7 +29,6 @@ allprojects {
     implementation 'org.springframework.boot:spring-boot-starter-amqp:2.6.7'
     implementation 'org.hibernate:hibernate-core:5.6.8.Final'
     implementation 'org.apache.tomcat:tomcat-dbcp:10.0.20'
-    implementation 'mysql:mysql-connector-java:8.0.29'
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
     implementation 'io.github.cdimascio:dotenv-java:2.2.3'
     implementation 'com.google.code.gson:gson:2.9.0'
@@ -38,6 +37,7 @@ allprojects {
 
     // Runtime
     runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.6.7'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.29'
 
     // Test
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
@@ -78,7 +78,6 @@ subprojects {
     implementation 'org.springframework.boot:spring-boot-starter-web:2.6.7'
 
     testImplementation rootProject.sourceSets.main.output
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.7'
 
     if (project.name != "shared") {
       implementation project(":shared")
@@ -123,10 +122,12 @@ bootJar {
 
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web:2.6.7'
+  implementation platform('org.testcontainers:testcontainers-bom:1.16.3')
 
   implementation project(":shared")
   implementation project(":backoffice")
 
   testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.7'
+  testImplementation('org.testcontainers:mysql')
   testImplementation project(":shared").sourceSets.test.output
 }

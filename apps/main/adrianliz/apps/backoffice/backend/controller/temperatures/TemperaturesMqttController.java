@@ -33,9 +33,9 @@ public final class TemperaturesMqttController implements MqttCallback {
   }
 
   private IMqttClient createClient(final Parameter config) throws ParameterNotExist, MqttException {
-    defaultTopic = config.get("TEMPERATURES_MQTT_TOPIC");
+    defaultTopic = config.get("BACKOFFICE_TEMPERATURES_MQTT_TOPIC");
     return new MqttClient(
-        config.get("TEMPERATURES_MQTT_BROKER_URI"), config.get("TEMPERATURES_MQTT_CLIENT_ID"));
+        config.get("BACKOFFICE_MQTT_BROKER_URI"), config.get("BACKOFFICE_MQTT_CLIENT_ID"));
   }
 
   private void connect() throws MqttException {

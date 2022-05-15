@@ -22,7 +22,7 @@ public class BackofficeBackendWebSocketConfiguration implements WebSocketMessage
   public void registerStompEndpoints(final StompEndpointRegistry registry) {
     try {
       registry
-          .addEndpoint(config.get("TEMPERATURES_STOMP_ENDPOINT"))
+          .addEndpoint(config.get("BACKOFFICE_STOMP_ENDPOINT"))
           .setHandshakeHandler(new AssignPrincipalHandshakeHandler())
           .setAllowedOriginPatterns("*")
           .withSockJS();
@@ -34,9 +34,9 @@ public class BackofficeBackendWebSocketConfiguration implements WebSocketMessage
   @Override
   public void configureMessageBroker(final MessageBrokerRegistry registry) {
     try {
-      registry.enableSimpleBroker(config.get("TEMPERATURES_STOMP_TOPIC"));
-      registry.setApplicationDestinationPrefixes(config.get("TEMPERATURES_STOMP_APP_PREFIX"));
-      registry.setUserDestinationPrefix(config.get("TEMPERATURES_STOMP_USER_PREFIX"));
+      registry.enableSimpleBroker(config.get("BACKOFFICE_TEMPERATURES_STOMP_TOPIC"));
+      registry.setApplicationDestinationPrefixes(config.get("BACKOFFICE_STOMP_APP_PREFIX"));
+      registry.setUserDestinationPrefix(config.get("BACKOFFICE_STOMP_USER_PREFIX"));
     } catch (final ParameterNotExist ex) {
       ex.printStackTrace();
     }

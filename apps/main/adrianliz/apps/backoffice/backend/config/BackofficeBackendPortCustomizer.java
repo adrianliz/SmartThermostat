@@ -19,7 +19,7 @@ public class BackofficeBackendPortCustomizer
   @Override
   public void customize(final ConfigurableWebServerFactory factory) {
     try {
-      factory.setPort(param.getInt("TEMPERATURES_SERVER_PORT"));
+      factory.setPort(param.getInt("BACKOFFICE_BACKEND_SERVER_PORT"));
     } catch (final ParameterNotExist ex) {
       ex.printStackTrace();
     }

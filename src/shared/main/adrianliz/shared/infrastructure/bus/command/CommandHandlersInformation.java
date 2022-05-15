@@ -1,6 +1,7 @@
 package adrianliz.shared.infrastructure.bus.command;
 
 import adrianliz.shared.domain.Service;
+import adrianliz.shared.domain.Utils;
 import adrianliz.shared.domain.bus.command.Command;
 import adrianliz.shared.domain.bus.command.CommandHandler;
 import adrianliz.shared.domain.bus.command.CommandNotRegisteredError;
@@ -15,7 +16,7 @@ public final class CommandHandlersInformation {
   HashMap<Class<? extends Command>, Class<? extends CommandHandler>> indexedCommandHandlers;
 
   public CommandHandlersInformation() {
-    final Reflections reflections = new Reflections("adrianliz.smartthermostat");
+    final Reflections reflections = new Reflections(Utils.ORGANIZATION_NAME);
     final Set<Class<? extends CommandHandler>> classes =
         reflections.getSubTypesOf(CommandHandler.class);
 

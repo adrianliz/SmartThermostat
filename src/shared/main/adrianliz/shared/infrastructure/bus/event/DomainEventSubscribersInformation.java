@@ -1,6 +1,7 @@
 package adrianliz.shared.infrastructure.bus.event;
 
 import adrianliz.shared.domain.Service;
+import adrianliz.shared.domain.Utils;
 import adrianliz.shared.domain.bus.event.DomainEventSubscriber;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,7 +23,7 @@ public final class DomainEventSubscribersInformation {
   }
 
   private static HashMap<Class<?>, DomainEventSubscriberInformation> scanDomainEventSubscribers() {
-    final Reflections reflections = new Reflections("adrianliz.smartthermostat.*");
+    final Reflections reflections = new Reflections(Utils.ORGANIZATION_NAME);
     final Set<Class<?>> subscribers =
         reflections.getTypesAnnotatedWith(DomainEventSubscriber.class);
 

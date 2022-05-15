@@ -6,7 +6,6 @@ import adrianliz.shared.domain.criteria.FilterOperator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 import javax.persistence.criteria.*;
 
 public final class HibernateCriteriaConverter<T> {
@@ -60,7 +59,7 @@ public final class HibernateCriteriaConverter<T> {
 
   private Predicate[] formatPredicates(final List<Filter> filters, final Root<T> root) {
     final List<Predicate> predicates =
-        filters.stream().map(filter -> formatPredicate(filter, root)).collect(Collectors.toList());
+        filters.stream().map(filter -> formatPredicate(filter, root)).toList();
 
     Predicate[] predicatesArray = new Predicate[predicates.size()];
     predicatesArray = predicates.toArray(predicatesArray);

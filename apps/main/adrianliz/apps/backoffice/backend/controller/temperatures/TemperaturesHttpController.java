@@ -16,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController("/backoffice")
 @CrossOrigin(origins = "*")
 public final class TemperaturesHttpController extends ApiController {
 
@@ -43,7 +43,7 @@ public final class TemperaturesHttpController extends ApiController {
     }
   }
 
-  @PostMapping(value = "/temperatures/", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/temperatures", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<String> registrar(
       @RequestBody final RegistrarTemperatureCommand registrarTemperatureCommand) {
 

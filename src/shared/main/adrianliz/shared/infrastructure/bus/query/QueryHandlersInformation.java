@@ -1,6 +1,7 @@
 package adrianliz.shared.infrastructure.bus.query;
 
 import adrianliz.shared.domain.Service;
+import adrianliz.shared.domain.Utils;
 import adrianliz.shared.domain.bus.query.Query;
 import adrianliz.shared.domain.bus.query.QueryHandler;
 import adrianliz.shared.domain.bus.query.QueryNotRegisteredError;
@@ -15,7 +16,7 @@ public final class QueryHandlersInformation {
   HashMap<Class<? extends Query>, Class<? extends QueryHandler>> indexedQueryHandlers;
 
   public QueryHandlersInformation() {
-    final Reflections reflections = new Reflections("adrianliz.smartthermostat");
+    final Reflections reflections = new Reflections(Utils.ORGANIZATION_NAME);
     final Set<Class<? extends QueryHandler>> classes =
         reflections.getSubTypesOf(QueryHandler.class);
 

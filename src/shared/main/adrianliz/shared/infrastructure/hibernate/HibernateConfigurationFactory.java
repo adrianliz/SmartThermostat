@@ -1,6 +1,7 @@
 package adrianliz.shared.infrastructure.hibernate;
 
 import adrianliz.shared.domain.Service;
+import adrianliz.shared.domain.Utils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -18,6 +19,14 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Service
 public final class HibernateConfigurationFactory {
+  private static final String MYSQL_DEFAULT_DRIVER = "com.mysql.cj.jdbc.Driver";
+  private static final String MYSQL_DEFAULT_URL = "jdbc:mysql://%s:%s/%s";
+  private static final String MYSQL_DEFAULT_URL_OPTIONS =
+      "?useUnicode=true&useJDBCCompliantTimezoneShift=true&"
+          + "useLegacyDatetimeCode=false&serverTimezone=UTC";
+
+  private static final String HBM_FILES_MODULE_PATH = "/infrastructure/persistence/hibernate/";
+  private static final String ORGANIZATION_MAIN_PATH = "/main/" + Utils.ORGANIZATION_NAME + "/";
 
   private final ResourcePatternResolver resourceResolver;
 
@@ -50,10 +59,10 @@ public final class HibernateConfigurationFactory {
     final List<String> goodPaths = new ArrayList<>();
 
     for (final String module : modules) {
-      final String[] files = mappingFilesIn(module + "/infrastructure/persistence/hibernate/");
+      final String[] files = mappingFilesIn(module + HBM_FILES_MODULE_PATH);
 
       for (final String file : files) {
-        goodPaths.add(module + "/infrastructure/persistence/hibernate/" + file);
+        goodPaths.add(module + HBM_FILES_MODULE_PATH + file);
       }
     }
 
@@ -61,12 +70,12 @@ public final class HibernateConfigurationFactory {
   }
 
   private List<String> subdirectoriesFor(final String contextName) {
-    String path = "./src/" + contextName + "/main/adrianliz/" + contextName + "/";
+    String path = "./src/" + contextName + ORGANIZATION_MAIN_PATH + contextName + "/";
 
     String[] files = new File(path).list((current, name) -> new File(current, name).isDirectory());
 
     if (null == files) {
-      path = "./main/adrianliz/" + contextName + "/";
+      path = "." + ORGANIZATION_MAIN_PATH + contextName + "/";
       files = new File(path).list((current, name) -> new File(current, name).isDirectory());
     }
 
@@ -98,18 +107,32 @@ public final class HibernateConfigurationFactory {
       final String username,
       final String password)
       throws IOException {
+
+    return dataSource(
+        MYSQL_DEFAULT_DRIVER,
+        String.format(MYSQL_DEFAULT_URL, host, port, databaseName),
+        databaseName,
+        username,
+        password);
+  }
+
+  public DataSource dataSource(
+      final String driverClassName,
+      final String url,
+      final String databaseName,
+      final String username,
+      final String password)
+      throws IOException {
+
     final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-    dataSource.setUrl(
-        String.format(
-            "jdbc:mysql://%s:%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&"
-                + "useLegacyDatetimeCode=false&serverTimezone=UTC",
-            host, port, databaseName));
+    dataSource.setDriverClassName(driverClassName);
+    dataSource.setUrl(url + MYSQL_DEFAULT_URL_OPTIONS);
     dataSource.setUsername(username);
     dataSource.setPassword(password);
 
     final Resource mysqlResource =
         resourceResolver.getResource(String.format("classpath:database/%s.sql", databaseName));
+
     final String mysqlSentences =
         new Scanner(mysqlResource.getInputStream(), StandardCharsets.UTF_8)
             .useDelimiter("\\A")

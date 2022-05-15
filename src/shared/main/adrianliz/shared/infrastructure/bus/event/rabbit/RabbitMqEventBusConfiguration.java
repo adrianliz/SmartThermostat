@@ -64,7 +64,7 @@ public class RabbitMqEventBusConfiguration {
                 domainEventsExchange, retryDomainEventsExchange, deadLetterDomainEventsExchange)
             .stream()
             .flatMap(Collection::stream)
-            .collect(Collectors.toList());
+            .toList();
 
     declarables.addAll(queuesAndBindings);
 
@@ -111,7 +111,7 @@ public class RabbitMqEventBusConfiguration {
                                 .to(domainEventsExchange)
                                 .with(eventName);
                           })
-                      .collect(Collectors.toList());
+                      .toList();
 
               final List<Declarable> queuesAndBindings = new ArrayList<>();
               queuesAndBindings.add(queue);
@@ -131,7 +131,7 @@ public class RabbitMqEventBusConfiguration {
 
   private HashMap<String, Object> retryQueueArguments(
       final TopicExchange exchange, final String routingKey) {
-    return new HashMap<String, Object>() {
+    return new HashMap<>() {
       {
         put("x-dead-letter-exchange", exchange.getName());
         put("x-dead-letter-routing-key", routingKey);

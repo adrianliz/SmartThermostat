@@ -12,6 +12,8 @@ import java.util.HashMap;
 
 public final class Utils {
 
+  public static final String ORGANIZATION_NAME = "adrianliz";
+
   public static String dateToString(final LocalDateTime dateTime) {
     return dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
   }
