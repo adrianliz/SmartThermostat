@@ -10,6 +10,7 @@ import adrianliz.shared.domain.bus.query.QueryBus;
 import adrianliz.shared.domain.bus.query.QueryHandlerExecutionError;
 import java.io.Serializable;
 import java.util.HashMap;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -68,7 +69,8 @@ public final class TemperaturesWebSocketController {
         event.getUser().getName(), "/temperatures/last", getLastTemperature());
   }
 
+  @EventListener
   public void on(final TemperatureRegistered event) {
-    template.convertAndSend("/temperatures/last", event.celsisusRegistered());
+    template.convertAndSend("/temperatures/last", event.toPrimitives());
   }
 }

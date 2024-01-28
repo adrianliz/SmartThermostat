@@ -8,7 +8,6 @@ import org.springframework.amqp.AmqpException;
 import org.springframework.context.annotation.Primary;
 
 @Service
-@Primary
 public class RabbitMqEventBus implements EventBus {
   private final RabbitMqPublisher publisher;
   private final String exchangeName;

@@ -5,8 +5,10 @@ import adrianliz.shared.domain.bus.event.DomainEvent;
 import adrianliz.shared.domain.bus.event.EventBus;
 import java.util.List;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Primary;
 
 @Service
+@Primary
 public class SpringApplicationEventBus implements EventBus {
 
   private final ApplicationEventPublisher publisher;
